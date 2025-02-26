@@ -1,0 +1,41 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#imagemCarro {
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+/* Estilos específicos para cada botão do carro */
+#botaoLigar {
+    background-color: green;
+}
+
+#botaoDesligar {
+    background-color: red;
+}
+
+#botaoAcelerar {
+    background-color: blue;
+}
+
+#botaoFrear {
+    background-color: orange;
+}
+
+/* Estilo quando o mouse passa por cima dos botões do carro */
+button:hover {
+    opacity: 0.8;
+}
