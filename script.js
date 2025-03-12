@@ -1,4 +1,9 @@
-// Definição da Classe Carro
+// script.js
+
+// ============================================================================
+// Classe Carro (Classe Base)
+// ============================================================================
+
 class Carro {
     constructor(modelo, cor) {
         this.modelo = modelo;
@@ -9,25 +14,25 @@ class Carro {
 
     ligar() {
         this.ligado = true;
-        somLigar.currentTime = 0; // Garante que o som comece do início
+        somLigar.currentTime = 0;
         somLigar.play();
-        return "Carro ligado!";
+        return "Ligado!";
     }
 
     desligar() {
         this.ligado = false;
         this.velocidade = 0;
-        return "Carro desligado!";
+        return "Desligado!";
     }
 
     acelerar(incremento) {
         if (this.ligado) {
             this.velocidade += incremento;
-            somAcelerar.currentTime = 0; // Garante que o som comece do início
+            somAcelerar.currentTime = 0;
             somAcelerar.play();
             return `Acelerando! Velocidade atual: ${this.velocidade} km/h`;
         } else {
-            return "O carro precisa estar ligado para acelerar.";
+            return "Precisa estar ligado para acelerar.";
         }
     }
 
@@ -37,55 +42,148 @@ class Carro {
             if (this.velocidade < 0) {
                 this.velocidade = 0;
             }
-            somFrear.currentTime = 0; // Garante que o som comece do início
+            somFrear.currentTime = 0;
             somFrear.play();
             return `Freando! Velocidade atual: ${this.velocidade} km/h`;
         } else {
-            return "O carro precisa estar ligado para frear.";
+            return "Precisa estar ligado para frear.";
         }
     }
 }
 
-// Criando um Objeto Carro
-const meuCarro = new Carro("Fusca", "Azul");
+// ============================================================================
+// Classe Caminhao (Herda de Carro)
+// ============================================================================
 
-// Acessando elementos HTML
+class Caminhao extends Carro {
+    constructor(modelo, cor, capacidadeCarga) {
+        super(modelo, cor); // Chama o construtor da classe Carro
+        this.capacidadeCarga = capacidadeCarga;
+        this.cargaAtual = 0;
+    }
+
+    carregar(peso) {
+        if (this.cargaAtual + peso <= this.capacidadeCarga) {
+            this.cargaAtual += peso;
+            return `Caminhão carregado com ${peso} kg. Carga atual: ${this.cargaAtual} kg`;
+        } else {
+            return "Carga excede a capacidade do caminhão.";
+        }
+    }
+
+    descarregar(peso) {
+        if (this.cargaAtual - peso >= 0) {
+            this.cargaAtual -= peso;
+            return `Caminhão descarregado com ${peso} kg. Carga atual: ${this.cargaAtual} kg`;
+        } else {
+            return "Não é possível descarregar mais peso do que o carregado.";
+        }
+    }
+}
+
+// ============================================================================
+// Criando Objetos Carro e Caminhao
+// ============================================================================
+
+const meuCarro = new Carro("Fusca", "Azul");
+const meuCaminhao = new Caminhao("Volvo FH", "Branco", 20000);
+
+// ============================================================================
+// Acessando Elementos HTML (Carro)
+// ============================================================================
+
 const statusCarroElement = document.getElementById("statusCarro");
 const velocidadeCarroElement = document.getElementById("velocidadeCarro");
-const botaoLigar = document.getElementById("botaoLigar");
-const botaoDesligar = document.getElementById("botaoDesligar");
-const botaoAcelerar = document.getElementById("botaoAcelerar");
-const botaoFrear = document.getElementById("botaoFrear");
-const somLigar = document.getElementById("somLigar");
-const somAcelerar = document.getElementById("somAcelerar");
-const somFrear = document.getElementById("somFrear");
+const botaoLigarCarro = document.getElementById("botaoLigarCarro");
+const botaoDesligarCarro = document.getElementById("botaoDesligarCarro");
+const botaoAcelerarCarro = document.getElementById("botaoAcelerarCarro");
+const botaoFrearCarro = document.getElementById("botaoFrearCarro");
 
-// Funções para atualizar a interface
-function atualizarStatus() {
+
+// ============================================================================
+// Acessando Elementos HTML (Caminhao)
+// ============================================================================
+
+const statusCaminhaoElement = document.getElementById("statusCaminhao");
+const velocidadeCaminhaoElement = document.getElementById("velocidadeCaminhao");
+const botaoLigarCaminhao = document.getElementById("botaoLigarCaminhao");
+const botaoDesligarCaminhao = document.getElementById("botaoDesligarCaminhao");
+const botaoAcelerarCaminhao = document.getElementById("botaoAcelerarCaminhao");
+const botaoFrearCaminhao = document.getElementById("botaoFrearCaminhao");
+
+// ============================================================================
+// Funções para atualizar a interface (Carro)
+// ============================================================================
+
+function atualizarStatusCarro() {
     statusCarroElement.textContent = `Status: ${meuCarro.ligado ? "Ligado" : "Desligado"}`;
     velocidadeCarroElement.textContent = `Velocidade: ${meuCarro.velocidade} km/h`;
 }
 
-// Adicionando Event Listeners (Ouvintes de Evento)
-botaoLigar.addEventListener("click", function() {
+// ============================================================================
+// Funções para atualizar a interface (Caminhao)
+// ============================================================================
+
+function atualizarStatusCaminhao() {
+    statusCaminhaoElement.textContent = `Status: ${meuCaminhao.ligado ? "Ligado" : "Desligado"}`;
+    velocidadeCaminhaoElement.textContent = `Velocidade: ${meuCaminhao.velocidade} km/h`;
+}
+
+
+// ============================================================================
+// Adicionando Event Listeners (Carro)
+// ============================================================================
+
+botaoLigarCarro.addEventListener("click", function() {
     meuCarro.ligar();
-    atualizarStatus();
+    atualizarStatusCarro();
 });
 
-botaoDesligar.addEventListener("click", function() {
+botaoDesligarCarro.addEventListener("click", function() {
     meuCarro.desligar();
-    atualizarStatus();
+    atualizarStatusCarro();
 });
 
-botaoAcelerar.addEventListener("click", function() {
+botaoAcelerarCarro.addEventListener("click", function() {
     meuCarro.acelerar(10);
-    atualizarStatus();
+    atualizarStatusCarro();
 });
 
-botaoFrear.addEventListener("click", function() {
+botaoFrearCarro.addEventListener("click", function() {
     meuCarro.frear(10);
-    atualizarStatus();
+    atualizarStatusCarro();
 });
 
+
+// ============================================================================
+// Adicionando Event Listeners (Caminhao)
+// ============================================================================
+
+botaoLigarCaminhao.addEventListener("click", function() {
+    meuCaminhao.ligar();
+    atualizarStatusCaminhao();
+});
+
+botaoDesligarCaminhao.addEventListener("click", function() {
+    meuCaminhao.desligar();
+    atualizarStatusCaminhao();
+});
+
+botaoAcelerarCaminhao.addEventListener("click", function() {
+    meuCaminhao.acelerar(10);
+    atualizarStatusCaminhao();
+});
+
+botaoFrearCaminhao.addEventListener("click", function() {
+    meuCaminhao.frear(10);
+    atualizarStatusCaminhao();
+});
+
+
+
+// ============================================================================
 // Inicialização
-atualizarStatus();
+// ============================================================================
+
+atualizarStatusCarro();
+atualizarStatusCaminhao();
