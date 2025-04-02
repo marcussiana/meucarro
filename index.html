@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente</title>
+    <title>Garagem Inteligente - Manutenção</title>
+
+    <!-- Estilo CSS Principal -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Flatpickr CSS (Biblioteca do Calendário) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- (Opcional) Tema escuro do Flatpickr - você pode descomentar se preferir -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css"> -->
+
 </head>
 <body>
     <div id="container">
         <h1>Garagem Inteligente</h1>
-        <p id="selecione">Selecione:</p>
+        <p id="selecione">Selecione o veículo:</p>
 
+        <!-- Botões de Seleção -->
         <div id="veiculo-selection">
             <button data-veiculo="carro">Carro Casual</button>
             <button data-veiculo="esportivo">Carro Esportivo</button>
@@ -19,84 +28,232 @@
             <button data-veiculo="bicicleta">Bicicleta</button>
         </div>
 
+        <!-- ===== Carro Casual ===== -->
         <div id="carro-container" class="veiculo-container" style="display: none;">
             <h2>Carro Casual</h2>
-            <img src="img/carro.png" alt="Imagem do Carro" width="200">
-            <p><strong>Modelo:</strong> <span id="carro-modelo">Sedan</span></p>
-            <p><strong>Cor:</strong> <span id="carro-cor">Prata</span></p>
-            <p><strong>Status:</strong> <span id="carro-status">Desligado</span></p>
-            <p><strong>Velocidade:</strong> <span id="carro-velocidade">0</span> km/h</p>
-            <button data-acao="ligar" data-tipo="carro">Ligar</button>
-            <button data-acao="desligar" data-tipo="carro">Desligar</button>
-            <button data-acao="acelerar" data-tipo="carro">Acelerar</button>
-            <button data-acao="frear" data-tipo="carro">Frear</button>
-            <button data-acao="buzinar" data-tipo="carro">Buzinar</button>
+            <!-- Certifique-se que o caminho da imagem está correto -->
+            <img src="img/sally.png" alt="Imagem do Carro Casual" width="200">
+            <div class="info-veiculo">
+                <p><strong>Modelo:</strong> <span id="carro-modelo">Sedan</span></p>
+                <p><strong>Cor:</strong> <span id="carro-cor">Prata</span></p>
+                <p><strong>Status:</strong> <span id="carro-status">Desligado</span></p>
+                <p><strong>Velocidade:</strong> <span id="carro-velocidade">0</span> km/h</p>
+            </div>
+            <div class="acoes-veiculo">
+                <button data-acao="ligar" data-tipo="carro">Ligar</button>
+                <button data-acao="desligar" data-tipo="carro">Desligar</button>
+                <button data-acao="acelerar" data-tipo="carro">Acelerar</button>
+                <button data-acao="frear" data-tipo="carro">Frear</button>
+                <button data-acao="buzinar" data-tipo="carro">Buzinar</button>
+            </div>
+            <!-- Seção de Manutenção -->
+            <div class="manutencao-section">
+                <h3>Manutenção e Agendamento</h3>
+                <div class="form-manutencao">
+                    <input type="text" id="carro-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Carro Casual">
+                    <input type="text" id="carro-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Carro Casual">
+                    <input type="time" id="carro-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Carro Casual">
+                    <input type="number" id="carro-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Carro Casual">
+                    <select id="carro-servico-tipo" aria-label="Tipo de Serviço para Carro Casual">
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Corretiva">Corretiva</option>
+                        <option value="Agendada">Agendada</option>
+                    </select>
+                    <button data-acao="adicionarServico" data-tipo="carro">Adicionar/Agendar</button>
+                </div>
+                <h4>Histórico</h4>
+                <ul id="carro-historico-lista" aria-live="polite">
+                    <li>Nenhum serviço registrado.</li>
+                </ul>
+            </div>
         </div>
 
+        <!-- ===== Carro Esportivo ===== -->
         <div id="esportivo-container" class="veiculo-container" style="display: none;">
             <h2>Carro Esportivo</h2>
+            <!-- Certifique-se que o caminho da imagem está correto -->
             <img src="img/porsche.png" alt="Imagem do Carro Esportivo" width="200">
-            <p><strong>Modelo:</strong> <span id="esportivo-modelo">Ferrari</span></p>
-            <p><strong>Cor:</strong> <span id="esportivo-cor">Vermelha</span></p>
-            <p><strong>Status:</strong> <span id="esportivo-status">Desligado</span></p>
-            <p><strong>Velocidade:</strong> <span id="esportivo-velocidade">0</span> km/h</p>
-            <p><strong>Turbo:</strong> <span id="esportivo-turbo">Desativado</span></p>
-            <button data-acao="ligar" data-tipo="esportivo">Ligar</button>
-            <button data-acao="desligar" data-tipo="esportivo">Desligar</button>
-            <button data-acao="acelerar" data-tipo="esportivo">Acelerar</button>
-            <button data-acao="frear" data-tipo="esportivo">Frear</button>
-            <button data-acao="buzinar" data-tipo="esportivo">Buzinar</button>
-            <button data-acao="ativarTurbo" data-tipo="esportivo">Ativar Turbo</button>
-            <button data-acao="desativarTurbo" data-tipo="esportivo">Desativar Turbo</button>
+             <div class="info-veiculo">
+                <p><strong>Modelo:</strong> <span id="esportivo-modelo">Porsche 911</span></p>
+                <p><strong>Cor:</strong> <span id="esportivo-cor">Vermelha</span></p>
+                <p><strong>Status:</strong> <span id="esportivo-status">Desligado</span></p>
+                <p><strong>Velocidade:</strong> <span id="esportivo-velocidade">0</span> km/h</p>
+                <p><strong>Turbo:</strong> <span id="esportivo-turbo">Desativado</span></p>
+            </div>
+            <div class="acoes-veiculo">
+                <button data-acao="ligar" data-tipo="esportivo">Ligar</button>
+                <button data-acao="desligar" data-tipo="esportivo">Desligar</button>
+                <button data-acao="acelerar" data-tipo="esportivo">Acelerar</button>
+                <button data-acao="frear" data-tipo="esportivo">Frear</button>
+                <button data-acao="buzinar" data-tipo="esportivo">Buzinar</button>
+                <button data-acao="ativarTurbo" data-tipo="esportivo">Ativar Turbo</button>
+                <button data-acao="desativarTurbo" data-tipo="esportivo">Desativar Turbo</button>
+            </div>
+             <!-- Seção de Manutenção -->
+             <div class="manutencao-section">
+                <h3>Manutenção e Agendamento</h3>
+                <div class="form-manutencao">
+                    <input type="text" id="esportivo-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Carro Esportivo">
+                    <input type="text" id="esportivo-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Carro Esportivo">
+                    <input type="time" id="esportivo-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Carro Esportivo">
+                    <input type="number" id="esportivo-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Carro Esportivo">
+                    <select id="esportivo-servico-tipo" aria-label="Tipo de Serviço para Carro Esportivo">
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Corretiva">Corretiva</option>
+                        <option value="Agendada">Agendada</option>
+                    </select>
+                    <button data-acao="adicionarServico" data-tipo="esportivo">Adicionar/Agendar</button>
+                </div>
+                <h4>Histórico</h4>
+                <ul id="esportivo-historico-lista" aria-live="polite">
+                    <li>Nenhum serviço registrado.</li>
+                </ul>
+            </div>
         </div>
 
+        <!-- ===== Caminhão ===== -->
         <div id="caminhao-container" class="veiculo-container" style="display: none;">
             <h2>Caminhão</h2>
-            <img src="img/patrulha-de-seguranca-de-onibus-escolar-vetorial-guardioes-do-caminhao-limpa-neve-de-seguranca-estudantil-limpando-estradas-de-inverno_772298-9439.avif" alt="Imagem do Caminhão" width="200">
-            <p><strong>Modelo:</strong> <span id="caminhao-modelo">Volvo</span></p>
-            <p><strong>Cor:</strong> <span id="caminhao-cor">Branco</span></p>
-            <p><strong>Status:</strong> <span id="caminhao-status">Desligado</span></p>
-            <p><strong>Velocidade:</strong> <span id="caminhao-velocidade">0</span> km/h</p>
-            <p><strong>Carga Atual:</strong> <span id="caminhao-carga">0</span> kg</p>
-            <p><strong>Capacidade Máxima:</strong> <span id="caminhao-capacidade">5000</span> kg</p>
-            <button data-acao="ligar" data-tipo="caminhao">Ligar</button>
-            <button data-acao="desligar" data-tipo="caminhao">Desligar</button>
-            <button data-acao="acelerar" data-tipo="caminhao">Acelerar</button>
-            <button data-acao="frear" data-tipo="caminhao">Frear</button>
-            <button data-acao="buzinar" data-tipo="caminhao">Buzinar</button>
-            <label for="carga">Carga (kg):</label>
-            <input type="number" id="carga" data-tipo="caminhao">
-            <button data-acao="carregar" data-tipo="caminhao">Carregar</button>
+            <!-- Certifique-se que o caminho da imagem está correto -->
+            <img src="img/rosabb.png" alt="Imagem do Caminhão" width="200">
+            <div class="info-veiculo">
+                <p><strong>Modelo:</strong> <span id="caminhao-modelo">Volvo FH</span></p>
+                <p><strong>Cor:</strong> <span id="caminhao-cor">Branco</span></p>
+                <p><strong>Status:</strong> <span id="caminhao-status">Desligado</span></p>
+                <p><strong>Velocidade:</strong> <span id="caminhao-velocidade">0</span> km/h</p>
+                <p><strong>Carga Atual:</strong> <span id="caminhao-carga">0</span> kg</p>
+                <p><strong>Capacidade Máxima:</strong> <span id="caminhao-capacidade">5000</span> kg</p>
+            </div>
+            <div class="acoes-veiculo">
+                <button data-acao="ligar" data-tipo="caminhao">Ligar</button>
+                <button data-acao="desligar" data-tipo="caminhao">Desligar</button>
+                <button data-acao="acelerar" data-tipo="caminhao">Acelerar</button>
+                <button data-acao="frear" data-tipo="caminhao">Frear</button>
+                <button data-acao="buzinar" data-tipo="caminhao">Buzinar</button>
+                <label for="carga">Carga (kg):</label>
+                <!-- Note que este input de carga não tem data-tipo, a ação é pega pelo botão -->
+                <input type="number" id="carga">
+                <button data-acao="carregar" data-tipo="caminhao">Carregar</button>
+            </div>
+             <!-- Seção de Manutenção -->
+             <div class="manutencao-section">
+                <h3>Manutenção e Agendamento</h3>
+                <div class="form-manutencao">
+                    <input type="text" id="caminhao-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Caminhão">
+                    <input type="text" id="caminhao-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Caminhão">
+                    <input type="time" id="caminhao-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Caminhão">
+                    <input type="number" id="caminhao-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Caminhão">
+                    <select id="caminhao-servico-tipo" aria-label="Tipo de Serviço para Caminhão">
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Corretiva">Corretiva</option>
+                        <option value="Agendada">Agendada</option>
+                    </select>
+                    <button data-acao="adicionarServico" data-tipo="caminhao">Adicionar/Agendar</button>
+                </div>
+                <h4>Histórico</h4>
+                <ul id="caminhao-historico-lista" aria-live="polite">
+                   <li>Nenhum serviço registrado.</li>
+                </ul>
+            </div>
         </div>
 
+        <!-- ===== Moto ===== -->
         <div id="moto-container" class="veiculo-container" style="display: none;">
             <h2>Moto</h2>
+            <!-- Certifique-se que o caminho da imagem está correto -->
             <img src="img/Imagem-Capa-Motos-removebg-preview.png" alt="Imagem da Moto" width="200">
-            <p><strong>Modelo:</strong> <span id="moto-modelo">Harley Davidson</span></p>
-            <p><strong>Cor:</strong> <span id="moto-cor">Preto</span></p>
-            <p><strong>Status:</strong> <span id="moto-status">Desligado</span></p>
-            <p><strong>Velocidade:</strong> <span id="moto-velocidade">0</span> km/h</p>
-            <button data-acao="ligar" data-tipo="moto">Ligar</button>
-            <button data-acao="desligar" data-tipo="moto">Desligar</button>
-            <button data-acao="acelerar" data-tipo="moto">Acelerar</button>
-            <button data-acao="frear" data-tipo="moto">Frear</button>
-            <button data-acao="buzinar" data-tipo="moto">Buzinar</button>
+            <div class="info-veiculo">
+                <p><strong>Modelo:</strong> <span id="moto-modelo">Harley Fat Boy</span></p>
+                <p><strong>Cor:</strong> <span id="moto-cor">Preto</span></p>
+                <p><strong>Status:</strong> <span id="moto-status">Desligado</span></p>
+                <p><strong>Velocidade:</strong> <span id="moto-velocidade">0</span> km/h</p>
+            </div>
+            <div class="acoes-veiculo">
+                <button data-acao="ligar" data-tipo="moto">Ligar</button>
+                <button data-acao="desligar" data-tipo="moto">Desligar</button>
+                <button data-acao="acelerar" data-tipo="moto">Acelerar</button>
+                <button data-acao="frear" data-tipo="moto">Frear</button>
+                <button data-acao="buzinar" data-tipo="moto">Buzinar</button>
+            </div>
+             <!-- Seção de Manutenção -->
+             <div class="manutencao-section">
+                <h3>Manutenção e Agendamento</h3>
+                 <div class="form-manutencao">
+                    <input type="text" id="moto-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Moto">
+                    <input type="text" id="moto-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Moto">
+                    <input type="time" id="moto-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Moto">
+                    <input type="number" id="moto-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Moto">
+                    <select id="moto-servico-tipo" aria-label="Tipo de Serviço para Moto">
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Corretiva">Corretiva</option>
+                        <option value="Agendada">Agendada</option>
+                    </select>
+                    <button data-acao="adicionarServico" data-tipo="moto">Adicionar/Agendar</button>
+                </div>
+                <h4>Histórico</h4>
+                <ul id="moto-historico-lista" aria-live="polite">
+                   <li>Nenhum serviço registrado.</li>
+                </ul>
+            </div>
         </div>
 
+         <!-- ===== Bicicleta ===== -->
          <div id="bicicleta-container" class="veiculo-container" style="display: none;">
             <h2>Bicicleta</h2>
-            <img src="imagens/bike.avif" alt="Imagem da Bicicleta" width="200">
-            <p><strong>Modelo:</strong> <span id="bicicleta-modelo">Caloi</span></p>
-            <p><strong>Cor:</strong> <span id="bicicleta-cor">Azul</span></p>
-            <p><strong>Status:</strong> <span id="bicicleta-status">Parada</span></p>
-            <p><strong>Velocidade:</strong> <span id="bicicleta-velocidade">0</span> km/h</p>
-            <button data-acao="pedalar" data-tipo="bicicleta">Pedalar</button>
-            <button data-acao="frear" data-tipo="bicicleta">Frear</button>
-            <button data-acao="buzinar" data-tipo="bicicleta">Buzinar</button>
+            <!-- Certifique-se que o caminho da imagem está correto. Ex: "img/bike.png" -->
+            <img src="img/madoneskr7-removebg-preview.png" alt="Imagem da Bicicleta" width="200">
+             <div class="info-veiculo">
+                <p><strong>Modelo:</strong> <span id="bicicleta-modelo">Caloi Explorer</span></p>
+                <p><strong>Cor:</strong> <span id="bicicleta-cor">Azul</span></p>
+                <p><strong>Status:</strong> <span id="bicicleta-status">Parada</span></p>
+                <p><strong>Velocidade:</strong> <span id="bicicleta-velocidade">0</span> km/h</p>
+            </div>
+            <div class="acoes-veiculo">
+                <button data-acao="pedalar" data-tipo="bicicleta">Pedalar</button>
+                <button data-acao="frear" data-tipo="bicicleta">Frear</button>
+                <button data-acao="buzinar" data-tipo="bicicleta">Buzinar</button>
+            </div>
+             <!-- Seção de Manutenção (Simplificada para Bicicleta) -->
+             <div class="manutencao-section">
+                <h3>Manutenção e Registro</h3>
+                <div class="form-manutencao">
+                    <input type="text" id="bicicleta-servico-desc" placeholder="Descrição do Serviço/Ajuste" aria-label="Descrição do Serviço para Bicicleta">
+                    <input type="text" id="bicicleta-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Bicicleta">
+                    <input type="time" id="bicicleta-servico-hora" title="Hora (opcional)" aria-label="Hora do Serviço para Bicicleta"> <!-- Hora para consistência -->
+                    <input type="number" id="bicicleta-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Bicicleta">
+                     <!-- Tipo fixo via input hidden -->
+                    <input type="hidden" id="bicicleta-servico-tipo" value="Ajuste">
+                    <button data-acao="adicionarServico" data-tipo="bicicleta">Registrar Serviço</button>
+                </div>
+                <h4>Histórico</h4>
+                <ul id="bicicleta-historico-lista" aria-live="polite">
+                    <li>Nenhum serviço registrado.</li>
+                </ul>
+            </div>
+        </div> <!-- Fim do bicicleta-container -->
+
+        <!-- ===== Área de Agendamentos Futuros (NOVO) ===== -->
+        <div id="agendamentos-futuros-section">
+            <h2>Próximos Agendamentos</h2>
+            <ul id="agendamentos-futuros-lista" aria-live="polite">
+                <li>Nenhum agendamento futuro.</li>
+            </ul>
         </div>
 
-    </div>
+        <!-- ===== Área de Mensagens de Status (NOVO) ===== -->
+        <!-- aria-live="polite" informa leitores de tela sobre mudanças -->
+        <div id="status-messages" aria-live="polite"></div>
 
+    </div> <!-- Fim do <div id="container"> -->
+
+    <!-- Scripts JavaScript -->
+    <!-- Flatpickr JS (Biblioteca do Calendário) -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Flatpickr Locale Português (Tradução) -->
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
+    <!-- SEU script.js (DEVE VIR DEPOIS das bibliotecas) -->
     <script src="script.js"></script>
+
 </body>
 </html>

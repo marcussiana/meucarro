@@ -1,61 +1,429 @@
+/* Importa uma fonte mais moderna do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Reset básico e configuração geral */
+* { /* Corrigido: Seletor universal */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Facilita o cálculo de layouts */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Aplica a nova fonte */
+    background-color: #f4f7f6; /* Um fundo ligeiramente cinza */
+    color: #333;
+    line-height: 1.6;
+    padding: 20px; /* Adiciona um respiro nas bordas da tela */
+}
+
 #container {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 850px; /* Um pouco mais largo */
+    margin: 30px auto;
+    padding: 30px; /* Mais padding interno */
+    background-color: #ffffff; /* Fundo branco para o container principal */
+    border-radius: 12px; /* Bordas mais arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+    overflow: hidden; /* Garante que nada "vaze" */
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #2c3e50; /* Um azul escuro/cinza */
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 
 #selecione {
     text-align: center;
-    margin-top: 10px;
-    font-style: italic;
-    color: #777;
+    margin-bottom: 25px; /* Mais espaço abaixo */
+    font-style: normal; /* Remove itálico */
+    color: #555;
+    font-size: 1.1em;
 }
 
+/* Botões de Seleção de Veículo */
 #veiculo-selection {
-    margin-top: 20px;
     text-align: center;
+    margin-bottom: 30px;
+    display: flex; /* Usa flexbox para alinhar */
+    flex-wrap: wrap; /* Permite quebrar linha */
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Espaço entre os botões */
 }
 
 #veiculo-selection button {
-    padding: 10px 15px;
-    margin: 5px;
+    padding: 12px 20px; /* Botões maiores */
+    margin: 0; /* Remove margem individual, usa gap */
     border: none;
-    background-color: #4CAF50;
+    background-color: #3498db; /* Um azul mais vibrante */
     color: white;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave */
 }
 
 #veiculo-selection button:hover {
-    background-color: #367c39;
+    background-color: #2980b9; /* Azul mais escuro no hover */
+    transform: translateY(-2px); /* Leve efeito de elevação */
 }
 
+/* Container de cada Veículo (Card) */
 .veiculo-container {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
+    border: 1px solid #e0e0e0; /* Borda mais sutil */
+    border-radius: 8px;
+    padding: 25px; /* Mais padding interno */
     margin-top: 20px;
+    background-color: #fdfdfd; /* Fundo levemente diferente */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra interna sutil */
+    /* display: flex; // Removido - display:none/block controlado pelo JS */
+    flex-direction: column; /* Empilhar seções verticalmente */
+    gap: 20px; /* Espaço entre as seções internas */
 }
 
+.veiculo-container h2 {
+    text-align: center;
+    color: #34495e; /* Outro tom de azul/cinza */
+    margin-bottom: 15px; /* Espaço abaixo do título do veículo */
+    border-bottom: 1px solid #eee; /* Linha separadora abaixo do H2 */
+    padding-bottom: 10px;
+    font-weight: 500;
+}
+
+.veiculo-container img {
+    display: block; /* Garante que a imagem seja um bloco */
+    margin: 0 auto 15px auto; /* Centraliza a imagem */
+    max-width: 100%; /* Garante que não ultrapasse o container */
+    height: auto; /* Mantém a proporção */
+    max-height: 180px; /* Limita a altura máxima */
+    object-fit: contain; /* Ajusta a imagem sem distorcer */
+    border-radius: 5px; /* Leve arredondamento na imagem */
+}
+
+/* Seção de Informações do Veículo */
+.info-veiculo p {
+    margin-bottom: 8px; /* Espaçamento entre linhas de informação */
+    font-size: 0.95em;
+    color: #444;
+}
+
+.info-veiculo strong {
+    font-weight: 500; /* Peso médio para o label */
+    color: #333;
+    min-width: 110px; /* Garante alinhamento mínimo (ajustado) */
+    display: inline-block; /* Permite definir largura */
+}
+
+/* Seção de Ações do Veículo */
+.acoes-veiculo {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem linha */
+    gap: 10px; /* Espaço entre os botões */
+    justify-content: center; /* Centraliza os botões */
+    align-items: center; /* Alinha itens verticalmente (bom para input de carga) */
+}
+
+.acoes-veiculo button,
+.acoes-veiculo input[type="number"], /* Estilo do input de carga */
+.acoes-veiculo label {
+    margin: 0; /* Remove margens individuais */
+}
+
+/* Estilo geral para botões DENTRO do container do veículo */
 .veiculo-container button {
-    padding: 8px 12px;
-    margin: 5px;
+    padding: 9px 15px;
     border: none;
-    background-color: #007BFF;
+    background-color: #2ecc71; /* Verde para ações positivas (Ligar, Acelerar) */
     color: white;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    line-height: normal; /* Garante altura consistente */
 }
 
 .veiculo-container button:hover {
-    background-color: #0056b3;
+    background-color: #27ae60; /* Verde mais escuro */
+    transform: translateY(-1px);
+}
+
+/* Cores específicas para certas ações */
+.veiculo-container button[data-acao="desligar"],
+.veiculo-container button[data-acao="frear"],
+.veiculo-container button[data-acao="desativarTurbo"] {
+    background-color: #e74c3c; /* Vermelho para ações negativas/parada */
+}
+.veiculo-container button[data-acao="desligar"]:hover,
+.veiculo-container button[data-acao="frear"]:hover,
+.veiculo-container button[data-acao="desativarTurbo"]:hover {
+    background-color: #c0392b; /* Vermelho mais escuro */
+}
+
+.veiculo-container button[data-acao="buzinar"] {
+    background-color: #f39c12; /* Laranja para buzinar */
+}
+.veiculo-container button[data-acao="buzinar"]:hover {
+    background-color: #e67e22; /* Laranja mais escuro */
+}
+
+.veiculo-container button[data-acao="ativarTurbo"],
+.veiculo-container button[data-acao="carregar"],
+.veiculo-container button[data-acao="pedalar"] { /* Adicionado pedalar */
+    background-color: #9b59b6; /* Roxo para ações especiais */
+}
+.veiculo-container button[data-acao="ativarTurbo"]:hover,
+.veiculo-container button[data-acao="carregar"]:hover,
+.veiculo-container button[data-acao="pedalar"]:hover { /* Adicionado pedalar */
+    background-color: #8e44ad; /* Roxo mais escuro */
+}
+
+/* Input de Carga */
+.acoes-veiculo label[for="carga"] {
+    margin-left: 10px; /* Espaço antes do label */
+    color: #555;
+    font-weight: 500;
+}
+.acoes-veiculo input#carga {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 80px; /* Largura menor para o input de carga */
+    text-align: right;
+    font-family: inherit;
+    font-size: 0.9em;
+}
+
+
+/* --- Seção de Manutenção (Estilo Aprimorado) --- */
+.manutencao-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #eee; /* Linha separadora mais grossa */
+}
+
+.manutencao-section h3 {
+    color: #16a085; /* Verde água para o título da seção */
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.manutencao-section h4 {
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 5px;
+}
+
+/* Formulário de Manutenção */
+.form-manutencao {
+    display: grid; /* Usar Grid para mais controle */
+    /* Ajusta colunas: tenta encaixar 150px, mas deixa crescer até 1fr */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px; /* Espaçamento entre os campos */
+    align-items: end; /* Alinha itens na base (bom para botão) */
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa; /* Fundo levemente diferente para o form */
+    border-radius: 6px;
+}
+
+.form-manutencao input[type="text"],
+.form-manutencao input[type="number"],
+.form-manutencao select,
+.form-manutencao input[type="time"] { /* Incluído input time */
+    width: 100%; /* Ocupa toda a largura da coluna do grid */
+    padding: 10px; /* Mais padding interno */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-family: inherit; /* Herda a fonte Poppins */
+    line-height: normal; /* Garante altura correta */
+}
+
+.form-manutencao input:focus,
+.form-manutencao select:focus,
+.form-manutencao input[type="time"]:focus { /* Incluído input time */
+    outline: none;
+    border-color: #3498db; /* Borda azul ao focar */
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2); /* Sombra sutil no foco */
+}
+
+/* Botão de Adicionar/Agendar Serviço */
+.form-manutencao button {
+    background-color: #1abc9c; /* Verde água (igual ao H3) */
+    padding: 10px 18px; /* Ajusta padding */
+    white-space: nowrap; /* Evita quebra de linha no texto do botão */
+    /* Ocupa 1 coluna por padrão, alinhado ao final pela grid */
+    /* grid-column: span 1; (geralmente não necessário com auto-fit e align-items: end) */
+    height: 40px; /* Altura fixa para alinhar melhor com inputs */
+}
+.form-manutencao button:hover {
+    background-color: #16a085; /* Mais escuro */
+}
+
+/* Histórico de Manutenção (Lista) */
+#container ul[id$="-historico-lista"] { /* Seleciona todas as Uls que terminam com '-historico-lista' */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 180px; /* Altura máxima com scroll */
+    overflow-y: auto; /* Adiciona scroll se necessário */
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#container ul[id$="-historico-lista"] li {
+    padding: 10px 15px; /* Mais padding nos itens */
+    border-bottom: 1px solid #f0f0f0; /* Linha separadora mais sutil */
+    font-size: 0.9em;
+    color: #444;
+    transition: background-color 0.2s ease; /* Efeito suave no hover */
+    word-break: break-word; /* Quebra palavras longas na descrição */
+}
+
+#container ul[id$="-historico-lista"] li:last-child {
+    border-bottom: none;
+}
+
+#container ul[id$="-historico-lista"] li:hover {
+    background-color: #f8f9fa; /* Fundo sutil no hover */
+}
+
+/* Estilo para itens agendados na lista principal */
+#container ul[id$="-historico-lista"] li.agendada {
+    font-style: italic;
+    color: #3498db; /* Azul para destacar agendamentos */
+    background-color: #eaf5fc; /* Fundo azul bem claro */
+}
+#container ul[id$="-historico-lista"] li.agendada::before {
+    content: "📅 "; /* Ícone de calendário */
+    margin-right: 5px;
+    font-style: normal; /* Ícone não fica itálico */
+}
+
+/* --- Estilos para Novos Elementos (Agendamentos e Mensagens) --- */
+
+/* Campo de Hora (Reforço, caso o estilo geral não pegue) */
+.form-manutencao input[type="time"] {
+   min-width: 110px;
+   flex-grow: 0;
+}
+
+/* Seção de Agendamentos Futuros */
+#agendamentos-futuros-section {
+    margin-top: 40px; /* Mais espaço acima */
+    padding-top: 25px;
+    border-top: 2px solid #e0e0e0; /* Separador mais visível */
+}
+
+#agendamentos-futuros-section h2 {
+    text-align: center;
+    color: #8e44ad; /* Roxo para destacar */
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+#agendamentos-futuros-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto; /* Centraliza a lista */
+    max-width: 700px; /* Define uma largura máxima */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f8f9fa; /* Fundo sutil */
+    max-height: 250px; /* Limita altura com scroll */
+    overflow-y: auto;
+}
+
+ #agendamentos-futuros-lista li {
+    padding: 12px 18px; /* Mais padding */
+    border-bottom: 1px solid #eee;
+    font-size: 0.95em; /* Ligeiramente maior */
+    color: #333;
+    line-height: 1.5;
+    word-break: break-word; /* Quebra palavras longas */
+}
+ #agendamentos-futuros-lista li:last-child {
+    border-bottom: none;
+ }
+ #agendamentos-futuros-lista li strong { /* Destaca o nome do veículo */
+     font-weight: 600;
+     color: #2c3e50;
+     margin-right: 5px;
+ }
+
+/* Área de Mensagens de Status */
+#status-messages {
+    margin-top: 25px;
+    padding: 12px 18px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    display: none; /* Começa escondido */
+    opacity: 0; /* Começa invisível para transição */
+    transition: opacity 0.5s ease-in-out;
+    word-break: break-word; /* Quebra mensagens longas */
+}
+#status-messages.success {
+    background-color: #d1f2eb; /* Verde água claro */
+    color: #0d6a54;
+    border: 1px solid #a3e4d7;
+}
+#status-messages.error {
+    background-color: #f5b7b1; /* Vermelho claro */
+    color: #78281f;
+    border: 1px solid #f1948a;
+}
+#status-messages.info {
+    background-color: #eaf2f8; /* Azul claro */
+    color: #2874a6;
+    border: 1px solid #aed6f1;
+}
+
+
+/* Media Query para Telas Menores (Exemplo) */
+@media (max-width: 600px) {
+    body {
+        padding: 10px; /* Menos padding geral */
+    }
+    #container {
+        padding: 15px; /* Menos padding no container */
+    }
+    #veiculo-selection {
+        gap: 8px; /* Menos espaço entre botões de seleção */
+    }
+    #veiculo-selection button {
+        padding: 10px 15px; /* Botões ligeiramente menores */
+    }
+    .veiculo-container {
+        padding: 15px;
+    }
+    /* Ajusta grid do formulário para telas menores */
+    .form-manutencao {
+       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Tamanho mínimo menor */
+       gap: 10px;
+    }
+     /* Em telas MUITO pequenas, força 1 coluna */
+     @media (max-width: 400px) {
+          .form-manutencao {
+               grid-template-columns: 1fr;
+          }
+          .form-manutencao button {
+               width: 100%; /* Botão ocupa largura total */
+          }
+     }
+
+    #agendamentos-futuros-lista {
+        max-width: 95%; /* Ocupa mais largura em tela pequena */
+    }
+}
+
+/* Estilos específicos do Flatpickr (sobrescrevem se necessário) */
+.flatpickr-calendar {
+    font-family: 'Poppins', sans-serif; /* Usa a mesma fonte */
+    /* Outros ajustes de estilo para o calendário, se desejar */
 }
