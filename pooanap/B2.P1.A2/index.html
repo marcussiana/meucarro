@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint - Garagem Inteligente</title>
+    <style>
+        /* Estilos CSS (Focados na Funcionalidade do Checkpoint) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+        h1 { text-align: center; }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #e7e7e7;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 24px);
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-right: 5px; /* Espaço entre botões */
+        }
+        button:hover { opacity: 0.9; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button:disabled { background-color: #ccc !important; cursor: not-allowed; box-shadow: none; }
+
+        /* Botões específicos */
+        #form-adicionar-veiculo button[type="submit"] { background-color: #28a745; color: white; margin-top: 10px; }
+        .btn-remover { background-color: #dc3545; color: white; padding: 5px 10px; font-size: 0.9em; position: absolute; top: 15px; right: 15px; }
+
+        /* Botões de Interação */
+        .botoes-interacao button {
+            background-color: #6c757d; /* Cinza */
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+        .botoes-interacao button.acao-especifica {
+             background-color: #ffc107; /* Amarelo para ações específicas */
+             color: #333;
+        }
+
+
+        /* Lista de Veículos */
+        #lista-veiculos { margin-top: 15px; }
+        .veiculo-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            position: relative; /* Para o botão remover */
+        }
+        .veiculo-item p { margin: 8px 0; }
+        .veiculo-item strong { color: #444; }
+        .veiculo-item .tipo-veiculo {
+            font-style: italic;
+            color: #007bff;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: block; /* Faz ocupar a linha */
+        }
+
+
+        /* Campos condicionais (para tipos específicos de veículos) */
+        .campo-condicional {
+            display: none; /* Escondido por padrão */
+            padding-left: 15px;
+            border-left: 3px solid #17a2b8; /* Destaque visual */
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .campo-condicional label, .campo-condicional input {
+             font-size: 0.95em;
+        }
+
+        /* Mensagens de Feedback */
+        .loading-message { color: #6c757d; font-style: italic; }
+        .error-message { color: #dc3545; font-weight: bold; }
+        .info-message { color: #17a2b8; margin-top: 10px;} /* Azul para informações */
+
+    </style>
+    <!-- Font Awesome (Opcional, para ícones) -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-warehouse"></i> Garagem Inteligente Unificada (Checkpoint)</h1>
+
+        <!-- ============================================ -->
+        <!-- Seção: Adicionar Veículo                     -->
+        <!-- ============================================ -->
+        <section id="adicionar-veiculo">
+            <h2><i class="fas fa-plus-circle"></i> Adicionar Novo Veículo</h2>
+            <form id="form-adicionar-veiculo">
+                <!-- Campos Comuns -->
+                <div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" required placeholder="Ex: Fiat">
+                </div>
+                <div>
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" id="modelo" required placeholder="Ex: Uno">
+                </div>
+                <div>
+                    <label for="placa">Placa (Identificador Único):</label>
+                    <input type="text" id="placa" required placeholder="Ex: ABC-1234 ou ABC1D23">
+                </div>
+                 <div>
+                    <label for="cor">Cor:</label>
+                    <input type="text" id="cor" placeholder="Ex: Vermelho">
+                </div>
+
+                <!-- Seleção do Tipo de Veículo -->
+                <div>
+                    <label for="tipo-veiculo">Tipo de Veículo:</label>
+                    <select id="tipo-veiculo" required>
+                        <option value="" disabled selected>-- Selecione o tipo --</option>
+                        <option value="Carro">Carro</option>
+                        <option value="CarroEsportivo">Carro Esportivo</option>
+                        <option value="Caminhao">Caminhão</option>
+                    </select>
+                </div>
+
+                <!-- Campos Condicionais (aparecem com JS) -->
+                <div id="campos-carro" class="campo-condicional">
+                    <label for="numero-portas">Número de Portas:</label>
+                    <input type="number" id="numero-portas" min="2" step="1" placeholder="Ex: 4">
+                </div>
+
+                 <div id="campos-carro-esportivo" class="campo-condicional">
+                     <!-- Carro Esportivo herda portas de Carro, adiciona velocidade max -->
+                    <label for="velocidade-maxima">Velocidade Máxima (km/h):</label>
+                    <input type="number" id="velocidade-maxima" min="100" step="10" placeholder="Ex: 250">
+                </div>
+
+                <div id="campos-caminhao" class="campo-condicional">
+                    <label for="capacidade-carga">Capacidade de Carga (Ton):</label>
+                    <input type="number" id="capacidade-carga" min="1" step="0.5" placeholder="Ex: 5.5">
+                </div>
+
+                <button type="submit"><i class="fas fa-save"></i> Adicionar à Garagem</button>
+            </form>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- Seção: Lista de Veículos                     -->
+        <!-- ============================================ -->
+        <section id="garagem">
+            <h2><i class="fas fa-car"></i> Veículos na Garagem</h2>
+            <div id="lista-veiculos">
+                <p class="loading-message" id="loading-garagem">Carregando veículos...</p>
+                <!-- Veículos serão inseridos aqui dinamicamente -->
+            </div>
+        </section>
+
+    </div><!-- Fim .container -->
+
+    <!-- ===================================================================== -->
+    <!-- INÍCIO DO JAVASCRIPT                                                    -->
+    <!-- ===================================================================== -->
+    <script>
+
+        // =====================================================================
+        // PARTE 0: DEFINIÇÃO DAS CLASSES (POO)
+        // Idealmente, cada classe estaria em seu próprio arquivo .js
+        // (ex: js/Veiculo.js, js/Carro.js, etc.)
+        // =====================================================================
+
+        /**
+         * @class Veiculo
+         * @classdesc Classe base para todos os veículos da garagem.
+         * @param {string} marca - A marca do veículo.
+         * @param {string} modelo - O modelo do veículo.
+         * @param {string} placa - A placa única do veículo (usada como ID).
+         * @param {string} [cor='Não informada'] - A cor do veículo.
+         * @param {string} tipo - O tipo da classe (usado para recriar objetos do localStorage).
+         */
+        class Veiculo {
+            // --- Idealmente: Estaria no arquivo js/Veiculo.js ---
+            constructor(marca, modelo, placa, cor = 'Não informada') {
+                if (!marca || !modelo || !placa) {
+                    throw new Error("Marca, Modelo e Placa são obrigatórios.");
+                }
+                this.marca = marca.trim();
+                this.modelo = modelo.trim();
+                this.placa = placa.toUpperCase().trim(); // Placa como ID, normalizada
+                this.cor = cor.trim();
+                this._ligado = false; // Estado interno (privado por convenção com _)
+                this.tipo = this.constructor.name; // Salva o nome da classe! Essencial para recriar do storage.
+            }
+
+            get ligado() {
+                return this._ligado;
+            }
+
+            ligar() {
+                if (!this._ligado) {
+                    this._ligado = true;
+                    console.log(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Ligado.`);
+                    return true;
+                }
+                console.log(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Já está ligado.`);
+                return false;
+            }
+
+            desligar() {
+                if (this._ligado) {
+                    this._ligado = false;
+                    console.log(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Desligado.`);
+                    return true;
+                }
+                console.log(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Já está desligado.`);
+                return false;
+            }
+
+            acelerar() {
+                if (this._ligado) {
+                    console.log(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Acelerando... Vrum!`);
+                } else {
+                    console.warn(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Não pode acelerar, está desligado!`);
+                }
+            }
+
+            frear() {
+                 if (this._ligado) {
+                    console.log(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): Freando...`);
+                 } else {
+                     console.warn(`${this.tipo} ${this.marca} ${this.modelo} (${this.placa}): O veículo está desligado.`);
+                 }
+            }
+
+            /**
+             * Gera o HTML para exibir este veículo na lista.
+             * Inclui botões de interação.
+             * @returns {string} O HTML do item da lista.
+             */
+            toHTML() {
+                const idItem = `veiculo-item-${this.placa}`;
+                return `
+                    <div class="veiculo-item" id="${idItem}" data-placa="${this.placa}" data-tipo="${this.tipo}">
+                        <button class="btn-remover" data-placa="${this.placa}" title="Remover Veículo">×</button>
+                        <span class="tipo-veiculo"><i class="fas fa-tag"></i> ${this.tipo}</span>
+                        <p><strong>Placa:</strong> ${this.placa}</p>
+                        <p><strong>Marca:</strong> ${this.marca}</p>
+                        <p><strong>Modelo:</strong> ${this.modelo}</p>
+                        <p><strong>Cor:</strong> ${this.cor}</p>
+                        ${this.gerarHtmlEspecifico()} <!-- Chama método para detalhes específicos -->
+                        <div class="botoes-interacao">
+                            <button class="btn-ligar" data-placa="${this.placa}" title="Ligar/Desligar"><i class="fas fa-power-off"></i> Ligar/Desligar</button>
+                            <button class="btn-acelerar" data-placa="${this.placa}" title="Acelerar"><i class="fas fa-tachometer-alt"></i> Acelerar</button>
+                            <button class="btn-frear" data-placa="${this.placa}" title="Frear"><i class="fas fa-hand-paper"></i> Frear</button>
+                             ${this.gerarBotoesAcoesEspecificas()} <!-- Chama método para botões específicos -->
+                        </div>
+                        <p class="info-message"><i class="fas fa-info-circle"></i> Estado: <span class="estado-veiculo">${this._ligado ? 'Ligado' : 'Desligado'}</span></p>
+                    </div>
+                `;
+            }
+
+            /**
+             * Método para ser sobrescrito pelas classes filhas para adicionar
+             * informações específicas ao HTML.
+             * @returns {string} HTML adicional ou string vazia.
+             */
+            gerarHtmlEspecifico() {
+                return ''; // Classe base não tem info específica
+            }
+
+             /**
+             * Método para ser sobrescrito pelas classes filhas para adicionar
+             * botões de ações específicas ao HTML.
+             * @returns {string} HTML adicional ou string vazia.
+             */
+            gerarBotoesAcoesEspecificas() {
+                 return ''; // Classe base não tem ações específicas
+            }
+        }
+
+        /**
+         * @class Carro
+         * @classdesc Representa um carro comum, herda de Veiculo.
+         * @extends Veiculo
+         * @param {string} marca - Marca.
+         * @param {string} modelo - Modelo.
+         * @param {string} placa - Placa.
+         * @param {string} cor - Cor.
+         * @param {number} [numeroPortas=4] - Número de portas.
+         */
+        class Carro extends Veiculo {
+            // --- Idealmente: Estaria no arquivo js/Carro.js ---
+            constructor(marca, modelo, placa, cor, numeroPortas = 4) {
+                super(marca, modelo, placa, cor); // Chama o construtor da classe pai (Veiculo)
+                this.numeroPortas = parseInt(numeroPortas) || 4; // Garante que é número
+            }
+
+            // Sobrescreve para adicionar número de portas
+            gerarHtmlEspecifico() {
+                return `<p><strong>Portas:</strong> ${this.numeroPortas}</p>`;
+            }
+        }
+
+        /**
+         * @class CarroEsportivo
+         * @classdesc Representa um carro esportivo, herda de Carro.
+         * @extends Carro
+         * @param {string} marca - Marca.
+         * @param {string} modelo - Modelo.
+         * @param {string} placa - Placa.
+         * @param {string} cor - Cor.
+         * @param {number} [numeroPortas=2] - Número de portas (default 2 para esportivos).
+         * @param {number} [velocidadeMaxima=200] - Velocidade máxima em km/h.
+         */
+        class CarroEsportivo extends Carro {
+             // --- Idealmente: Estaria no arquivo js/CarroEsportivo.js ---
+            constructor(marca, modelo, placa, cor, numeroPortas = 2, velocidadeMaxima = 200) {
+                super(marca, modelo, placa, cor, numeroPortas); // Chama construtor de Carro
+                this.velocidadeMaxima = parseInt(velocidadeMaxima) || 200;
+                this._turboAtivo = false;
+            }
+
+            ativarTurbo() {
+                if(this.ligado) {
+                    if (!this._turboAtivo) {
+                        this._turboAtivo = true;
+                        console.log(`${this.marca} ${this.modelo} (${this.placa}): TURBO ATIVADO! 🔥`);
+                    } else {
+                        console.log(`${this.marca} ${this.modelo} (${this.placa}): Turbo já está ativo.`);
+                    }
+                } else {
+                     console.warn(`${this.marca} ${this.modelo} (${this.placa}): Ligue o carro para ativar o turbo!`);
+                }
+            }
+
+            desativarTurbo() {
+                 if (this._turboAtivo) {
+                     this._turboAtivo = false;
+                     console.log(`${this.marca} ${this.modelo} (${this.placa}): Turbo desativado.`);
+                 }
+            }
+
+             // Sobrescreve para adicionar velocidade máxima e estado do turbo
+            gerarHtmlEspecifico() {
+                // Chama o gerarHtmlEspecifico da classe pai (Carro) para incluir as portas
+                let htmlBase = super.gerarHtmlEspecifico();
+                return htmlBase + `
+                    <p><strong>Velocidade Máx:</strong> ${this.velocidadeMaxima} km/h</p>
+                    <p><strong>Turbo:</strong> <span class="estado-turbo">${this._turboAtivo ? 'Ativo 🔥' : 'Inativo'}</span></p>
+                `;
+            }
+
+            // Sobrescreve para adicionar botão do turbo
+             gerarBotoesAcoesEspecificas() {
+                 return `
+                    <button class="btn-turbo acao-especifica" data-placa="${this.placa}" title="Ativar/Desativar Turbo">
+                        <i class="fas fa-bolt"></i> Turbo
+                    </button>
+                 `;
+             }
+
+             // Garante que o turbo desliga ao desligar o carro
+             desligar() {
+                 if(super.desligar()) { // Chama o desligar da classe pai
+                     this.desativarTurbo(); // Desativa o turbo junto
+                     return true;
+                 }
+                 return false;
+             }
+        }
+
+
+        /**
+         * @class Caminhao
+         * @classdesc Representa um caminhão, herda de Veiculo.
+         * @extends Veiculo
+         * @param {string} marca - Marca.
+         * @param {string} modelo - Modelo.
+         * @param {string} placa - Placa.
+         * @param {string} cor - Cor.
+         * @param {number} [capacidadeCarga=1] - Capacidade de carga em toneladas.
+         */
+        class Caminhao extends Veiculo {
+            // --- Idealmente: Estaria no arquivo js/Caminhao.js ---
+            constructor(marca, modelo, placa, cor, capacidadeCarga = 1) {
+                super(marca, modelo, placa, cor);
+                this.capacidadeCarga = parseFloat(capacidadeCarga) || 1;
+                this._carregado = false; // Estado da carga
+            }
+
+            carregar() {
+                 if (this.ligado) {
+                     console.warn(`${this.marca} ${this.modelo} (${this.placa}): Desligue o caminhão para carregar/descarregar com segurança.`);
+                     return;
+                 }
+                 if (!this._carregado) {
+                    this._carregado = true;
+                    console.log(`${this.marca} ${this.modelo} (${this.placa}): Carregando ${this.capacidadeCarga} Ton... Carga completa.`);
+                 } else {
+                     console.log(`${this.marca} ${this.modelo} (${this.placa}): Já está carregado.`);
+                 }
+            }
+
+            descarregar() {
+                 if (this.ligado) {
+                     console.warn(`${this.marca} ${this.modelo} (${this.placa}): Desligue o caminhão para carregar/descarregar com segurança.`);
+                     return;
+                 }
+                 if (this._carregado) {
+                     this._carregado = false;
+                     console.log(`${this.marca} ${this.modelo} (${this.placa}): Descarregando... Carga removida.`);
+                 } else {
+                      console.log(`${this.marca} ${this.modelo} (${this.placa}): Já está descarregado.`);
+                 }
+            }
+
+             // Sobrescreve para adicionar capacidade e estado da carga
+            gerarHtmlEspecifico() {
+                 return `
+                    <p><strong>Capacidade:</strong> ${this.capacidadeCarga} Ton</p>
+                    <p><strong>Carga:</strong> <span class="estado-carga">${this._carregado ? 'Carregado' : 'Vazio'}</span></p>
+                 `;
+            }
+
+             // Sobrescreve para adicionar botão de carga/descarga
+             gerarBotoesAcoesEspecificas() {
+                 return `
+                    <button class="btn-carga acao-especifica" data-placa="${this.placa}" title="Carregar/Descarregar">
+                         <i class="fas fa-truck-loading"></i> Carga
+                    </button>
+                 `;
+             }
+        }
+
+
+        // =====================================================================
+        // PARTE 1: GERENCIAMENTO DA GARAGEM (LocalStorage e Array)
+        // =====================================================================
+
+        const CHAVE_STORAGE_GARAGEM = 'checkpoint_garagem_unificada'; // Chave específica
+        let garagem = []; // Array que guarda os objetos Veiculo (e filhos) em memória
+
+        /**
+         * Carrega os veículos do LocalStorage e recria as instâncias das classes corretas.
+         * Essencial para que os métodos (ligar, acelerar, etc.) funcionem.
+         * @returns {Array<Veiculo>} Um array com as instâncias de Veiculo (ou subclasses).
+         */
+        function carregarGaragemDoStorage() {
+            const veiculosJson = localStorage.getItem(CHAVE_STORAGE_GARAGEM);
+            const veiculosRecriados = [];
+            if (veiculosJson) {
+                try {
+                    const veiculosArraySimples = JSON.parse(veiculosJson);
+
+                    veiculosArraySimples.forEach(veiculoSimples => {
+                        // CRUCIAL: Usa a propriedade 'tipo' para saber qual classe instanciar
+                        switch (veiculoSimples.tipo) {
+                            case 'Carro':
+                                veiculosRecriados.push(new Carro(veiculoSimples.marca, veiculoSimples.modelo, veiculoSimples.placa, veiculoSimples.cor, veiculoSimples.numeroPortas));
+                                break;
+                            case 'CarroEsportivo':
+                                // Recria e restaura o estado interno se necessário
+                                const esportivo = new CarroEsportivo(veiculoSimples.marca, veiculoSimples.modelo, veiculoSimples.placa, veiculoSimples.cor, veiculoSimples.numeroPortas, veiculoSimples.velocidadeMaxima);
+                                esportivo._ligado = veiculoSimples._ligado; // Restaura estado
+                                esportivo._turboAtivo = veiculoSimples._turboAtivo; // Restaura estado
+                                veiculosRecriados.push(esportivo);
+                                break;
+                            case 'Caminhao':
+                                 // Recria e restaura o estado interno se necessário
+                                const caminhao = new Caminhao(veiculoSimples.marca, veiculoSimples.modelo, veiculoSimples.placa, veiculoSimples.cor, veiculoSimples.capacidadeCarga);
+                                caminhao._ligado = veiculoSimples._ligado; // Restaura estado
+                                caminhao._carregado = veiculoSimples._carregado; // Restaura estado
+                                veiculosRecriados.push(caminhao);
+                                break;
+                            case 'Veiculo': // Caso seja um veículo base (embora menos comum de adicionar)
+                            default: // Fallback para Veiculo base se tipo for desconhecido
+                                const veiculoBase = new Veiculo(veiculoSimples.marca, veiculoSimples.modelo, veiculoSimples.placa, veiculoSimples.cor);
+                                veiculoBase._ligado = veiculoSimples._ligado; // Restaura estado
+                                veiculosRecriados.push(veiculoBase);
+                                break;
+                        }
+                    });
+                    console.log("Garagem carregada do LocalStorage.", veiculosRecriados);
+
+                } catch (error) {
+                    console.error("Erro ao carregar ou parsear dados da garagem do LocalStorage:", error);
+                    localStorage.removeItem(CHAVE_STORAGE_GARAGEM); // Limpa dados inválidos
+                }
+            }
+            return veiculosRecriados;
+        }
+
+        /**
+         * Salva o estado atual da garagem (array de objetos) no LocalStorage.
+         * @param {Array<Veiculo>} garagemAtual - O array de veículos a ser salvo.
+         */
+        function salvarGaragemNoStorage(garagemAtual) {
+            try {
+                // JSON.stringify vai salvar as propriedades dos objetos, incluindo o 'tipo' e estados (_ligado, etc)
+                localStorage.setItem(CHAVE_STORAGE_GARAGEM, JSON.stringify(garagemAtual));
+                console.log("Garagem salva no LocalStorage.");
+            } catch (error) {
+                console.error("Erro ao salvar garagem no LocalStorage:", error);
+                alert("Erro ao salvar dados da garagem. O armazenamento pode estar cheio.");
+            }
+        }
+
+
+        // =====================================================================
+        // PARTE 2: MANIPULAÇÃO DO DOM E EVENTOS
+        // =====================================================================
+
+        // Referências aos elementos do DOM
+        const formAdicionar = document.getElementById('form-adicionar-veiculo');
+        const selectTipoVeiculo = document.getElementById('tipo-veiculo');
+        const camposCarroDiv = document.getElementById('campos-carro');
+        const camposCarroEsportivoDiv = document.getElementById('campos-carro-esportivo');
+        const camposCaminhaoDiv = document.getElementById('campos-caminhao');
+        const listaVeiculosDiv = document.getElementById('lista-veiculos');
+        const loadingGaragemMsg = document.getElementById('loading-garagem');
+
+        /**
+         * Renderiza a lista de veículos na página HTML.
+         */
+        function renderizarGaragemNaTela() {
+            if (!listaVeiculosDiv) return; // Segurança
+
+            listaVeiculosDiv.innerHTML = ''; // Limpa a lista
+
+            if (garagem.length === 0) {
+                listaVeiculosDiv.innerHTML = '<p class="info-message">Sua garagem está vazia.</p>';
+            } else {
+                garagem.forEach(veiculo => {
+                    try {
+                        listaVeiculosDiv.innerHTML += veiculo.toHTML(); // Usa o método da classe para gerar o HTML
+                    } catch (error) {
+                         console.error(`Erro ao renderizar veículo ${veiculo.placa}:`, error);
+                         // Adiciona um item de erro na lista para feedback
+                         listaVeiculosDiv.innerHTML += `<div class="veiculo-item error-message">Erro ao exibir veículo placa ${veiculo.placa}. Verifique o console.</div>`;
+                    }
+                });
+            }
+             if (loadingGaragemMsg) loadingGaragemMsg.style.display = 'none'; // Esconde msg inicial
+        }
+
+
+         /**
+          * Atualiza a exibição dos campos condicionais no formulário com base no tipo selecionado.
+          */
+         function atualizarCamposFormulario() {
+            const tipoSelecionado = selectTipoVeiculo.value;
+
+             // Esconde todos primeiro
+             camposCarroDiv.style.display = 'none';
+             camposCarroEsportivoDiv.style.display = 'none';
+             camposCaminhaoDiv.style.display = 'none';
+
+             // Mostra os campos relevantes
+             if (tipoSelecionado === 'Carro' || tipoSelecionado === 'CarroEsportivo') {
+                 camposCarroDiv.style.display = 'block';
+             }
+             if (tipoSelecionado === 'CarroEsportivo') {
+                  camposCarroEsportivoDiv.style.display = 'block';
+             }
+             if (tipoSelecionado === 'Caminhao') {
+                 camposCaminhaoDiv.style.display = 'block';
+             }
+         }
+
+        // --- Event Listeners ---
+
+        // Atualiza campos do formulário quando o tipo de veículo muda
+        selectTipoVeiculo.addEventListener('change', atualizarCamposFormulario);
+
+        // Adiciona veículo ao submeter o formulário
+        formAdicionar.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evita recarregar a página
+
+            // Pega valores dos campos comuns
+            const marca = document.getElementById('marca').value;
+            const modelo = document.getElementById('modelo').value;
+            const placa = document.getElementById('placa').value;
+            const cor = document.getElementById('cor').value;
+            const tipo = selectTipoVeiculo.value;
+
+             // Pega valores dos campos específicos (se visíveis)
+             const numeroPortas = document.getElementById('numero-portas').value;
+             const velocidadeMaxima = document.getElementById('velocidade-maxima').value;
+             const capacidadeCarga = document.getElementById('capacidade-carga').value;
+
+            try {
+                let novoVeiculo;
+                const placaNormalizada = placa.toUpperCase().trim();
+
+                 // Verifica duplicidade de placa
+                 if (garagem.some(v => v.placa === placaNormalizada)) {
+                    throw new Error(`Veículo com a placa ${placaNormalizada} já existe!`);
+                 }
+
+                // Cria a instância da classe correta baseado no tipo selecionado
+                switch (tipo) {
+                    case 'Carro':
+                        novoVeiculo = new Carro(marca, modelo, placa, cor, numeroPortas);
+                        break;
+                    case 'CarroEsportivo':
+                         novoVeiculo = new CarroEsportivo(marca, modelo, placa, cor, numeroPortas, velocidadeMaxima);
+                        break;
+                    case 'Caminhao':
+                        novoVeiculo = new Caminhao(marca, modelo, placa, cor, capacidadeCarga);
+                        break;
+                    default:
+                        throw new Error("Tipo de veículo inválido selecionado.");
+                }
+
+                garagem.push(novoVeiculo);        // Adiciona ao array
+                salvarGaragemNoStorage(garagem); // Salva no storage
+                renderizarGaragemNaTela();        // Atualiza a tela
+                formAdicionar.reset();            // Limpa o formulário
+                atualizarCamposFormulario();      // Reseta campos condicionais
+                 document.getElementById('marca').focus(); // Foco no primeiro campo
+                console.log(`${tipo} ${novoVeiculo.placa} adicionado.`);
+
+            } catch (error) {
+                alert(`Erro ao adicionar veículo: ${error.message}`);
+                console.error("Erro detalhado:", error);
+            }
+        });
+
+
+         // Event Listener DELEGADO para botões na lista de veículos (Remover e Interagir)
+         listaVeiculosDiv.addEventListener('click', (event) => {
+            const target = event.target; // Onde o clique ocorreu
+            const veiculoDiv = target.closest('.veiculo-item'); // Encontra o 'card' pai
+
+             if (!veiculoDiv) return; // Sai se o clique não foi num item válido
+
+            const placa = veiculoDiv.dataset.placa; // Pega a placa do 'data-placa'
+
+            // Encontra o OBJETO veículo correspondente no array 'garagem'
+            // É crucial operar sobre o objeto para chamar seus métodos!
+            const veiculoObj = garagem.find(v => v.placa === placa);
+
+             if (!veiculoObj) {
+                 console.error(`Objeto veículo com placa ${placa} não encontrado no array 'garagem'.`);
+                 // Talvez remover o item do DOM se o objeto sumiu por algum erro?
+                 // veiculoDiv.remove();
+                 return;
+             }
+
+            // --- Ação: Remover Veículo ---
+            if (target.classList.contains('btn-remover') || target.closest('.btn-remover')) {
+                 if (confirm(`Tem certeza que deseja remover o ${veiculoObj.tipo} placa ${placa}?`)) {
+                     garagem = garagem.filter(v => v.placa !== placa); // Remove do array
+                     salvarGaragemNoStorage(garagem); // Salva
+                      // Animação simples de remoção
+                      veiculoDiv.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+                      veiculoDiv.style.opacity = '0';
+                      veiculoDiv.style.transform = 'translateX(-100px)';
+                      setTimeout(() => {
+                         renderizarGaragemNaTela(); // Re-renderiza a lista completa após animação
+                      }, 400);
+                     console.log(`${veiculoObj.tipo} ${placa} removido.`);
+                 }
+            }
+
+            // --- Ações: Interação (Ligar, Acelerar, etc.) ---
+             else if (target.classList.contains('btn-ligar') || target.closest('.btn-ligar')) {
+                 if (veiculoObj.ligado) {
+                     veiculoObj.desligar();
+                 } else {
+                     veiculoObj.ligar();
+                 }
+                 salvarGaragemNoStorage(garagem); // Salva o novo estado (_ligado)
+                 // Atualiza o estado visualmente (sem re-renderizar tudo)
+                 veiculoDiv.querySelector('.estado-veiculo').textContent = veiculoObj.ligado ? 'Ligado' : 'Desligado';
+                 // Atualiza estado do turbo visualmente se for esportivo
+                 if(veiculoObj instanceof CarroEsportivo) {
+                     veiculoDiv.querySelector('.estado-turbo').textContent = veiculoObj._turboAtivo ? 'Ativo 🔥' : 'Inativo';
+                 }
+            }
+            else if (target.classList.contains('btn-acelerar') || target.closest('.btn-acelerar')) {
+                 veiculoObj.acelerar(); // Ação no console
+            }
+            else if (target.classList.contains('btn-frear') || target.closest('.btn-frear')) {
+                 veiculoObj.frear(); // Ação no console
+            }
+            // Ações específicas (usando instanceof para garantir que o método existe)
+            else if (target.classList.contains('btn-turbo') || target.closest('.btn-turbo')) {
+                 if (veiculoObj instanceof CarroEsportivo) {
+                     if (veiculoObj._turboAtivo) {
+                         veiculoObj.desativarTurbo();
+                     } else {
+                         veiculoObj.ativarTurbo();
+                     }
+                     salvarGaragemNoStorage(garagem); // Salva estado do turbo
+                     // Atualiza visualmente
+                     veiculoDiv.querySelector('.estado-turbo').textContent = veiculoObj._turboAtivo ? 'Ativo 🔥' : 'Inativo';
+                 }
+            }
+            else if (target.classList.contains('btn-carga') || target.closest('.btn-carga')) {
+                 if (veiculoObj instanceof Caminhao) {
+                    if (veiculoObj._carregado) {
+                        veiculoObj.descarregar();
+                    } else {
+                        veiculoObj.carregar();
+                    }
+                    salvarGaragemNoStorage(garagem); // Salva estado da carga
+                     // Atualiza visualmente
+                     veiculoDiv.querySelector('.estado-carga').textContent = veiculoObj._carregado ? 'Carregado' : 'Vazio';
+                 }
+            }
+         });
+
+        // =====================================================================
+        // PARTE 3: INICIALIZAÇÃO DA APLICAÇÃO
+        // =====================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Checkpoint Garagem Inteligente: Iniciando...');
+            garagem = carregarGaragemDoStorage(); // Carrega dados salvos
+            renderizarGaragemNaTela(); // Exibe na tela
+            atualizarCamposFormulario(); // Garante que campos corretos aparecem no form
+            console.log('Aplicação pronta.');
+        });
+
+    </script>
+    <!-- ===================================================================== -->
+    <!-- FIM DO JAVASCRIPT                                                       -->
+    <!-- ===================================================================== -->
+
+</body>
+</html>
