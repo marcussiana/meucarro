@@ -76,7 +76,7 @@ h1 {
     margin-top: 20px;
     background-color: #fdfdfd; /* Fundo levemente diferente */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra interna sutil */
-    /* display: flex; // Removido - display:none/block controlado pelo JS */
+    /* O display: flex é aplicado via JS quando o container é mostrado */
     flex-direction: column; /* Empilhar seções verticalmente */
     gap: 20px; /* Espaço entre as seções internas */
 }
@@ -133,7 +133,7 @@ h1 {
 .veiculo-container button {
     padding: 9px 15px;
     border: none;
-    background-color: #2ecc71; /* Verde para ações positivas (Ligar, Acelerar) */
+    /* background-color: #2ecc71; /* Verde para ações positivas (Ligar, Acelerar) - REMOVIDO padrao */
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -143,11 +143,20 @@ h1 {
 }
 
 .veiculo-container button:hover {
-    background-color: #27ae60; /* Verde mais escuro */
+    /* background-color: #27ae60; /* Verde mais escuro - REMOVIDO padrao */
     transform: translateY(-1px);
 }
 
 /* Cores específicas para certas ações */
+.veiculo-container button[data-acao="ligar"],
+.veiculo-container button[data-acao="acelerar"] {
+    background-color: #2ecc71; /* Verde */
+}
+.veiculo-container button[data-acao="ligar"]:hover,
+.veiculo-container button[data-acao="acelerar"]:hover {
+    background-color: #27ae60;
+}
+
 .veiculo-container button[data-acao="desligar"],
 .veiculo-container button[data-acao="frear"],
 .veiculo-container button[data-acao="desativarTurbo"] {
@@ -252,7 +261,7 @@ h1 {
 }
 
 /* Botão de Adicionar/Agendar Serviço */
-.form-manutencao button {
+.form-manutencao button[data-acao="adicionarServico"] { /* Mais específico */
     background-color: #1abc9c; /* Verde água (igual ao H3) */
     padding: 10px 18px; /* Ajusta padding */
     white-space: nowrap; /* Evita quebra de linha no texto do botão */
@@ -260,7 +269,7 @@ h1 {
     /* grid-column: span 1; (geralmente não necessário com auto-fit e align-items: end) */
     height: 40px; /* Altura fixa para alinhar melhor com inputs */
 }
-.form-manutencao button:hover {
+.form-manutencao button[data-acao="adicionarServico"]:hover { /* Mais específico */
     background-color: #16a085; /* Mais escuro */
 }
 
@@ -368,20 +377,85 @@ h1 {
     transition: opacity 0.5s ease-in-out;
     word-break: break-word; /* Quebra mensagens longas */
 }
-#status-messages.success {
+#status-messages.status-success { /* Nome da classe atualizado para corresponder ao JS */
     background-color: #d1f2eb; /* Verde água claro */
     color: #0d6a54;
     border: 1px solid #a3e4d7;
 }
-#status-messages.error {
+#status-messages.status-error { /* Nome da classe atualizado para corresponder ao JS */
     background-color: #f5b7b1; /* Vermelho claro */
     color: #78281f;
     border: 1px solid #f1948a;
 }
-#status-messages.info {
+#status-messages.status-info { /* Nome da classe atualizado para corresponder ao JS */
     background-color: #eaf2f8; /* Azul claro */
     color: #2874a6;
     border: 1px solid #aed6f1;
+}
+
+
+/* --- Estilos para Seção de Detalhes da API Simulada (NOVO) --- */
+
+.detalhes-api-section {
+    margin-top: 20px; /* Espaço acima do botão */
+    padding-top: 15px;
+    border-top: 1px dashed #ccc; /* Separador pontilhado */
+    text-align: center; /* Centraliza o botão */
+}
+
+.btn-detalhes-extras { /* Botão específico */
+    background-color: #5dade2; /* Azul um pouco diferente */
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+    margin-bottom: 15px; /* Espaço entre botão e área de detalhes */
+}
+
+.btn-detalhes-extras:hover {
+    background-color: #3498db; /* Azul mais forte no hover */
+}
+
+.detalhes-api-container {
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #f9f9f9; /* Fundo levemente acinzentado */
+    text-align: left; /* Alinha o texto dos detalhes à esquerda */
+    font-size: 0.9em;
+    color: #333;
+}
+
+.detalhes-api-container h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #5dade2; /* Mesma cor do botão */
+    text-align: center;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.detalhes-api-container p {
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+.detalhes-api-container strong {
+    font-weight: 500;
+    color: #111;
+}
+
+/* Estilo para mensagem de carregando/erro dentro do container */
+.detalhes-api-container em,
+.detalhes-api-container p[style*="color:"] { /* Seleciona <p> com cor inline */
+    font-style: italic;
+    text-align: center;
+    display: block; /* Garante que ocupe a linha toda */
 }
 
 

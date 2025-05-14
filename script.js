@@ -898,6 +898,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // --- Funções da API Simulada (NOVO) ---
+
+    /**
+     * Busca detalhes extras de um veículo na API simulada (arquivo JSON local).
+     * @param {string} identificadorVeiculo O tipo do veículo (ex: 'carro', 'esportivo').
+     * @returns {Promise<object|null>} Uma Promise que resolve com os dados do veículo ou null se não encontrado/erro.
+     */
+    async function buscarDetalhesVeiculoAPI(identificadorVeiculo) {
+        const url = './dados_veiculos_api.json'; // Caminho para o seu arquivo JSON
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                // Se a resposta não for OK (ex: 404 Not Found), lança um erro
+                throw new Error(`Erro ao buscar dados da API: ${response.status} ${response.statusText}`);
+            }
+
+            // Tenta parsear a resposta como JSON
+            const dadosTodosVeiculos = await response.json();
+
+            // Procura pelo veículo específico no array retornado
+            const detalhesVeiculo = dadosTodosVeiculos.find(veiculo => veiculo.identificador === identificadorVeiculo);
+
+            // Retorna os detalhes encontrados ou null se não achou
+            return detalhesVeiculo || null;
+
+        } catch (error) {
+            console.error(`Falha ao buscar ou processar detalhes do veículo (${identificadorVeiculo}):`, error);
+            // Em caso de qualquer erro (fetch, JSON parse, etc.), retorna null
+            return null;
+        }
+    }
+
+
     // --- Inicialização ---
 
     function inicializarGaragemPadrao() {
@@ -957,13 +991,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById(`${veiculoTipo}-container`);
             if(container) {
                 // Mostra como flex para o layout interno funcionar
-                container.style.display = 'flex';
+                container.style.display = 'flex'; // <- MUDADO PARA FLEX
                 // Garante que o histórico está atualizado ao exibir
                 if(veiculos[veiculoTipo] && veiculos[veiculoTipo].manutencao) {
                     veiculos[veiculoTipo].manutencao.atualizarDisplayHistorico();
                 } else {
                      console.error(`Veículo ou gerenciador de manutenção para ${veiculoTipo} não encontrado ao tentar exibir.`);
                 }
+                // Esconde a área de detalhes da API ao selecionar um novo veículo
+                const detalhesContainer = container.querySelector('.detalhes-api-container');
+                if(detalhesContainer) {
+                    detalhesContainer.style.display = 'none';
+                    detalhesContainer.innerHTML = ''; // Limpa o conteúdo
+                }
+
             } else {
                 console.error(`Container HTML #${veiculoTipo}-container não encontrado.`);
                  mostrarMensagem(`Erro: container para ${veiculoTipo} não existe no HTML.`, 'error');
@@ -981,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const tipo = target.dataset.tipo;
             const veiculo = veiculos[tipo];
 
-            if (!veiculo) {
+            if (!veiculo && acao !== 'verDetalhes') { // Permite verDetalhes mesmo sem objeto JS (embora não ideal)
                 console.error(`Objeto veículo ${tipo} não encontrado (ação: ${acao}).`);
                 mostrarMensagem(`Erro interno: Veículo ${tipo} não existe.`, 'error');
                 return;
@@ -990,11 +1031,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Executa a ação com tratamento de erro
             try {
                 switch (acao) {
-                    case 'ligar':           veiculo.ligar(); break;
-                    case 'desligar':        veiculo.desligar(); break;
-                    case 'acelerar':        veiculo.acelerar(); break;
-                    case 'frear':           veiculo.frear(); break;
-                    case 'buzinar':         veiculo.buzinar(); break;
+                    case 'ligar':           if(veiculo) veiculo.ligar(); break;
+                    case 'desligar':        if(veiculo) veiculo.desligar(); break;
+                    case 'acelerar':        if(veiculo) veiculo.acelerar(); break;
+                    case 'frear':           if(veiculo) veiculo.frear(); break;
+                    case 'buzinar':         if(veiculo) veiculo.buzinar(); break;
                     case 'ativarTurbo':     if (veiculo instanceof CarroEsportivo) veiculo.ativarTurbo(); else console.warn("Ação 'ativarTurbo' inválida para", tipo); break;
                     case 'desativarTurbo':  if (veiculo instanceof CarroEsportivo) veiculo.desativarTurbo(); else console.warn("Ação 'desativarTurbo' inválida para", tipo); break;
                     case 'carregar':        if (veiculo instanceof Caminhao) {
@@ -1004,7 +1045,52 @@ document.addEventListener('DOMContentLoaded', function() {
                                             } else console.warn("Ação 'carregar' inválida para", tipo); break;
                     case 'pedalar':         if (veiculo instanceof Bicicleta) veiculo.pedalar(); else console.warn("Ação 'pedalar' inválida para", tipo); break;
 
+                    case 'verDetalhes': // <<< NOVO CASE ADICIONADO AQUI
+                        // Pega o elemento onde os detalhes serão exibidos
+                        const detalhesContainer = document.getElementById(`${tipo}-detalhes-api`);
+                        if (!detalhesContainer) {
+                             console.error(`Elemento #${tipo}-detalhes-api não encontrado no HTML.`);
+                             mostrarMensagem(`Erro: Área para exibir detalhes de ${tipo} não encontrada.`, 'error');
+                             break; // Sai do case se não encontrar onde mostrar
+                        }
+
+                        // Mostra mensagem de carregando e limpa conteúdo anterior
+                        detalhesContainer.innerHTML = '<em>Carregando detalhes...</em>';
+                        detalhesContainer.style.display = 'block'; // Torna a área visível
+
+                        // Chama a função assíncrona para buscar os dados
+                        // Usamos uma função anônima async dentro do case para poder usar await
+                        (async () => {
+                            try {
+                                const detalhes = await buscarDetalhesVeiculoAPI(tipo);
+
+                                // Verifica o resultado da busca
+                                if (detalhes) {
+                                    // Constrói o HTML para exibir os detalhes
+                                    let htmlDetalhes = `<h4>Detalhes Extras (API)</h4>`;
+                                    htmlDetalhes += `<p><strong>Valor FIPE:</strong> ${detalhes.valorFIPE || 'N/D'}</p>`;
+                                    htmlDetalhes += `<p><strong>Recall Pendente:</strong> ${detalhes.recallPendente ? `<span style="color:red; font-weight:bold;">SIM</span> ${detalhes.recallDetalhe ? `(${detalhes.recallDetalhe})` : ''}` : 'Não'}</p>`;
+                                    htmlDetalhes += `<p><strong>Dica de Manutenção:</strong> ${detalhes.dicaManutencao || 'Nenhuma dica disponível.'}</p>`;
+                                    htmlDetalhes += `<p><strong>Última Revisão (API):</strong> ${detalhes.ultimaRevisaoAPI || 'N/D'}</p>`;
+
+                                    detalhesContainer.innerHTML = htmlDetalhes;
+                                } else {
+                                    // Se retornou null, pode ser não encontrado ou erro na busca
+                                    detalhesContainer.innerHTML = '<p style="color: orange;">Detalhes extras não encontrados para este veículo ou falha ao buscar.</p>';
+                                }
+                            } catch (error) {
+                                // Captura erros que possam ocorrer na lógica *após* a busca (embora improváveis aqui)
+                                console.error(`Erro ao processar detalhes para ${tipo}:`, error);
+                                detalhesContainer.innerHTML = '<p style="color: red;">Erro ao exibir os detalhes. Verifique o console.</p>';
+                                mostrarMensagem(`Erro ao exibir detalhes de ${tipo}.`, 'error');
+                            }
+                        })(); // Chama a função anônima async imediatamente
+
+                        break; // Fim do case 'verDetalhes'
+
+
                     case 'adicionarServico':
+                        if(!veiculo) break; // Precisa do objeto veículo para adicionar serviço
                         // Encontra o formulário pai do botão clicado
                         const form = target.closest('.form-manutencao');
                         if(!form) { throw new Error("Formulário de manutenção não encontrado."); }

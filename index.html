@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente - Manutenção</title>
+    <title>Garagem Inteligente - Manutenção & API</title> <!-- Título Atualizado -->
 
     <!-- Estilo CSS Principal -->
     <link rel="stylesheet" href="style.css">
@@ -31,7 +31,6 @@
         <!-- ===== Carro Casual ===== -->
         <div id="carro-container" class="veiculo-container" style="display: none;">
             <h2>Carro Casual</h2>
-            <!-- Certifique-se que o caminho da imagem está correto -->
             <img src="img/sally.png" alt="Imagem do Carro Casual" width="200">
             <div class="info-veiculo">
                 <p><strong>Modelo:</strong> <span id="carro-modelo">Sedan</span></p>
@@ -46,6 +45,14 @@
                 <button data-acao="frear" data-tipo="carro">Frear</button>
                 <button data-acao="buzinar" data-tipo="carro">Buzinar</button>
             </div>
+            <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
+            <div class="detalhes-api-section">
+                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="carro">Ver Detalhes Extras (API)</button>
+                <div id="carro-detalhes-api" class="detalhes-api-container" style="display: none;">
+                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
+                </div>
+            </div>
+            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
             <!-- Seção de Manutenção -->
             <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
@@ -71,7 +78,6 @@
         <!-- ===== Carro Esportivo ===== -->
         <div id="esportivo-container" class="veiculo-container" style="display: none;">
             <h2>Carro Esportivo</h2>
-            <!-- Certifique-se que o caminho da imagem está correto -->
             <img src="img/porsche.png" alt="Imagem do Carro Esportivo" width="200">
              <div class="info-veiculo">
                 <p><strong>Modelo:</strong> <span id="esportivo-modelo">Porsche 911</span></p>
@@ -89,6 +95,14 @@
                 <button data-acao="ativarTurbo" data-tipo="esportivo">Ativar Turbo</button>
                 <button data-acao="desativarTurbo" data-tipo="esportivo">Desativar Turbo</button>
             </div>
+             <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
+             <div class="detalhes-api-section">
+                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="esportivo">Ver Detalhes Extras (API)</button>
+                <div id="esportivo-detalhes-api" class="detalhes-api-container" style="display: none;">
+                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
+                </div>
+            </div>
+            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
              <!-- Seção de Manutenção -->
              <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
@@ -114,7 +128,6 @@
         <!-- ===== Caminhão ===== -->
         <div id="caminhao-container" class="veiculo-container" style="display: none;">
             <h2>Caminhão</h2>
-            <!-- Certifique-se que o caminho da imagem está correto -->
             <img src="img/rosabb.png" alt="Imagem do Caminhão" width="200">
             <div class="info-veiculo">
                 <p><strong>Modelo:</strong> <span id="caminhao-modelo">Volvo FH</span></p>
@@ -131,10 +144,17 @@
                 <button data-acao="frear" data-tipo="caminhao">Frear</button>
                 <button data-acao="buzinar" data-tipo="caminhao">Buzinar</button>
                 <label for="carga">Carga (kg):</label>
-                <!-- Note que este input de carga não tem data-tipo, a ação é pega pelo botão -->
                 <input type="number" id="carga">
                 <button data-acao="carregar" data-tipo="caminhao">Carregar</button>
             </div>
+             <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
+             <div class="detalhes-api-section">
+                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="caminhao">Ver Detalhes Extras (API)</button>
+                <div id="caminhao-detalhes-api" class="detalhes-api-container" style="display: none;">
+                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
+                </div>
+            </div>
+            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
              <!-- Seção de Manutenção -->
              <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
@@ -160,7 +180,6 @@
         <!-- ===== Moto ===== -->
         <div id="moto-container" class="veiculo-container" style="display: none;">
             <h2>Moto</h2>
-            <!-- Certifique-se que o caminho da imagem está correto -->
             <img src="img/Imagem-Capa-Motos-removebg-preview.png" alt="Imagem da Moto" width="200">
             <div class="info-veiculo">
                 <p><strong>Modelo:</strong> <span id="moto-modelo">Harley Fat Boy</span></p>
@@ -175,6 +194,14 @@
                 <button data-acao="frear" data-tipo="moto">Frear</button>
                 <button data-acao="buzinar" data-tipo="moto">Buzinar</button>
             </div>
+             <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
+             <div class="detalhes-api-section">
+                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="moto">Ver Detalhes Extras (API)</button>
+                <div id="moto-detalhes-api" class="detalhes-api-container" style="display: none;">
+                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
+                </div>
+            </div>
+            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
              <!-- Seção de Manutenção -->
              <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
@@ -200,7 +227,6 @@
          <!-- ===== Bicicleta ===== -->
          <div id="bicicleta-container" class="veiculo-container" style="display: none;">
             <h2>Bicicleta</h2>
-            <!-- Certifique-se que o caminho da imagem está correto. Ex: "img/bike.png" -->
             <img src="img/madoneskr7-removebg-preview.png" alt="Imagem da Bicicleta" width="200">
              <div class="info-veiculo">
                 <p><strong>Modelo:</strong> <span id="bicicleta-modelo">Caloi Explorer</span></p>
@@ -213,6 +239,7 @@
                 <button data-acao="frear" data-tipo="bicicleta">Frear</button>
                 <button data-acao="buzinar" data-tipo="bicicleta">Buzinar</button>
             </div>
+             <!-- Observação: Não adicionamos Detalhes Extras para a bicicleta aqui -->
              <!-- Seção de Manutenção (Simplificada para Bicicleta) -->
              <div class="manutencao-section">
                 <h3>Manutenção e Registro</h3>
