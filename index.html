@@ -3,23 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente - Manutenção & API</title> <!-- Título Atualizado -->
+    <title>Garagem Inteligente - Documentada com IA</title>
 
-    <!-- Estilo CSS Principal -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Flatpickr CSS (Biblioteca do Calendário) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- (Opcional) Tema escuro do Flatpickr - você pode descomentar se preferir -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css"> -->
-
 </head>
 <body>
     <div id="container">
         <h1>Garagem Inteligente</h1>
         <p id="selecione">Selecione o veículo:</p>
 
-        <!-- Botões de Seleção -->
         <div id="veiculo-selection">
             <button data-veiculo="carro">Carro Casual</button>
             <button data-veiculo="esportivo">Carro Esportivo</button>
@@ -45,15 +38,12 @@
                 <button data-acao="frear" data-tipo="carro">Frear</button>
                 <button data-acao="buzinar" data-tipo="carro">Buzinar</button>
             </div>
-            <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
             <div class="detalhes-api-section">
                 <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="carro">Ver Detalhes Extras (API)</button>
                 <div id="carro-detalhes-api" class="detalhes-api-container" style="display: none;">
                     <!-- O conteúdo será inserido aqui pelo JavaScript -->
                 </div>
             </div>
-            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
-            <!-- Seção de Manutenção -->
             <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
                 <div class="form-manutencao">
@@ -95,15 +85,11 @@
                 <button data-acao="ativarTurbo" data-tipo="esportivo">Ativar Turbo</button>
                 <button data-acao="desativarTurbo" data-tipo="esportivo">Desativar Turbo</button>
             </div>
-             <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
              <div class="detalhes-api-section">
                 <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="esportivo">Ver Detalhes Extras (API)</button>
                 <div id="esportivo-detalhes-api" class="detalhes-api-container" style="display: none;">
-                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
                 </div>
             </div>
-            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
-             <!-- Seção de Manutenção -->
              <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
                 <div class="form-manutencao">
@@ -143,19 +129,15 @@
                 <button data-acao="acelerar" data-tipo="caminhao">Acelerar</button>
                 <button data-acao="frear" data-tipo="caminhao">Frear</button>
                 <button data-acao="buzinar" data-tipo="caminhao">Buzinar</button>
-                <label for="carga">Carga (kg):</label>
-                <input type="number" id="carga">
+                <label for="caminhao-input-carga">Carga (kg):</label> <!-- ID do input corrigido/adicionado -->
+                <input type="number" id="caminhao-input-carga">
                 <button data-acao="carregar" data-tipo="caminhao">Carregar</button>
             </div>
-             <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
              <div class="detalhes-api-section">
                 <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="caminhao">Ver Detalhes Extras (API)</button>
                 <div id="caminhao-detalhes-api" class="detalhes-api-container" style="display: none;">
-                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
                 </div>
             </div>
-            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
-             <!-- Seção de Manutenção -->
              <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
                 <div class="form-manutencao">
@@ -194,15 +176,11 @@
                 <button data-acao="frear" data-tipo="moto">Frear</button>
                 <button data-acao="buzinar" data-tipo="moto">Buzinar</button>
             </div>
-             <!-- ===== Seção Detalhes Extras (API Simulada) - INÍCIO ===== -->
              <div class="detalhes-api-section">
                 <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="moto">Ver Detalhes Extras (API)</button>
                 <div id="moto-detalhes-api" class="detalhes-api-container" style="display: none;">
-                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
                 </div>
             </div>
-            <!-- ===== Seção Detalhes Extras (API Simulada) - FIM ===== -->
-             <!-- Seção de Manutenção -->
              <div class="manutencao-section">
                 <h3>Manutenção e Agendamento</h3>
                  <div class="form-manutencao">
@@ -237,18 +215,15 @@
             <div class="acoes-veiculo">
                 <button data-acao="pedalar" data-tipo="bicicleta">Pedalar</button>
                 <button data-acao="frear" data-tipo="bicicleta">Frear</button>
-                <button data-acao="buzinar" data-tipo="bicicleta">Buzinar</button>
+                <button data-acao="buzinar" data-tipo="bicicleta">Buzinar</button> <!-- Campainha -->
             </div>
-             <!-- Observação: Não adicionamos Detalhes Extras para a bicicleta aqui -->
-             <!-- Seção de Manutenção (Simplificada para Bicicleta) -->
              <div class="manutencao-section">
                 <h3>Manutenção e Registro</h3>
                 <div class="form-manutencao">
                     <input type="text" id="bicicleta-servico-desc" placeholder="Descrição do Serviço/Ajuste" aria-label="Descrição do Serviço para Bicicleta">
                     <input type="text" id="bicicleta-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Bicicleta">
-                    <input type="time" id="bicicleta-servico-hora" title="Hora (opcional)" aria-label="Hora do Serviço para Bicicleta"> <!-- Hora para consistência -->
+                    <input type="time" id="bicicleta-servico-hora" title="Hora (opcional)" aria-label="Hora do Serviço para Bicicleta">
                     <input type="number" id="bicicleta-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Bicicleta">
-                     <!-- Tipo fixo via input hidden -->
                     <input type="hidden" id="bicicleta-servico-tipo" value="Ajuste">
                     <button data-acao="adicionarServico" data-tipo="bicicleta">Registrar Serviço</button>
                 </div>
@@ -257,9 +232,8 @@
                     <li>Nenhum serviço registrado.</li>
                 </ul>
             </div>
-        </div> <!-- Fim do bicicleta-container -->
+        </div>
 
-        <!-- ===== Área de Agendamentos Futuros (NOVO) ===== -->
         <div id="agendamentos-futuros-section">
             <h2>Próximos Agendamentos</h2>
             <ul id="agendamentos-futuros-lista" aria-live="polite">
@@ -267,20 +241,25 @@
             </ul>
         </div>
 
-        <!-- ===== Área de Mensagens de Status (NOVO) ===== -->
-        <!-- aria-live="polite" informa leitores de tela sobre mudanças -->
         <div id="status-messages" aria-live="polite"></div>
 
-    </div> <!-- Fim do <div id="container"> -->
+    </div>
 
-    <!-- Scripts JavaScript -->
-    <!-- Flatpickr JS (Biblioteca do Calendário) -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- Flatpickr Locale Português (Tradução) -->
     <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
-
-    <!-- SEU script.js (DEVE VIR DEPOIS das bibliotecas) -->
-    <script src="script.js"></script>
+<!-- Scripts Modulares -->
+<!-- Classes Base e Utilitários Primeiro -->
+<script type="module" src="js/utils.js"></script> <!-- Se você criou -->
+<script type="module" src="js/Manutencao.js"></script>
+<script type="module" src="js/Veiculo.js"></script>
+<!-- Classes Derivadas -->
+<script type="module" src="js/Carro.js"></script>
+<script type="module" src="js/CarroEsportivo.js"></script>
+<script type="module" src="js/Caminhao.js"></script>
+<script type="module" src="js/Moto.js"></script>
+<script type="module" src="js/Bicicleta.js"></script>
+<!-- Script Principal da Aplicação -->
+<script type="module" src="js/Garagem.js"></script>
 
 </body>
 </html>
