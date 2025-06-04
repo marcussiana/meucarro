@@ -129,7 +129,7 @@
                 <button data-acao="acelerar" data-tipo="caminhao">Acelerar</button>
                 <button data-acao="frear" data-tipo="caminhao">Frear</button>
                 <button data-acao="buzinar" data-tipo="caminhao">Buzinar</button>
-                <label for="caminhao-input-carga">Carga (kg):</label> <!-- ID do input corrigido/adicionado -->
+                <label for="caminhao-input-carga">Carga (kg):</label>
                 <input type="number" id="caminhao-input-carga">
                 <button data-acao="carregar" data-tipo="caminhao">Carregar</button>
             </div>
@@ -241,25 +241,31 @@
             </ul>
         </div>
 
+        <!-- ===== NOVA SEÇÃO DE CLIMA ===== -->
+        <div id="clima-section">
+            <h2>Condições Climáticas Atuais</h2>
+            <div id="clima-info" aria-live="polite">
+                <p>Carregando informações do clima...</p>
+            </div>
+        </div>
+        <!-- =============================== -->
+
         <div id="status-messages" aria-live="polite"></div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
-<!-- Scripts Modulares -->
-<!-- Classes Base e Utilitários Primeiro -->
-<script type="module" src="js/utils.js"></script> <!-- Se você criou -->
-<script type="module" src="js/Manutencao.js"></script>
-<script type="module" src="js/Veiculo.js"></script>
-<!-- Classes Derivadas -->
-<script type="module" src="js/Carro.js"></script>
-<script type="module" src="js/CarroEsportivo.js"></script>
-<script type="module" src="js/Caminhao.js"></script>
-<script type="module" src="js/Moto.js"></script>
-<script type="module" src="js/Bicicleta.js"></script>
-<!-- Script Principal da Aplicação -->
-<script type="module" src="js/Garagem.js"></script>
+    <!-- Scripts Modulares -->
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/Manutencao.js"></script>
+    <script type="module" src="js/Veiculo.js"></script>
+    <script type="module" src="js/Carro.js"></script>
+    <script type="module" src="js/CarroEsportivo.js"></script>
+    <script type="module" src="js/Caminhao.js"></script>
+    <script type="module" src="js/Moto.js"></script>
+    <script type="module" src="js/Bicicleta.js"></script>
+    <script type="module" src="js/Garagem.js"></script>
 
 </body>
 </html>

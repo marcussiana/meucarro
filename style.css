@@ -501,3 +501,60 @@ h1 {
     font-family: 'Poppins', sans-serif; /* Usa a mesma fonte */
     /* Outros ajustes de estilo para o calendário, se desejar */
 }
+/* ===== Estilos para Seção de Clima (NOVO) ===== */
+#clima-section {
+    margin-top: 40px; /* Mais espaço acima */
+    padding-top: 25px;
+    border-top: 2px solid #e0e0e0; /* Separador mais visível */
+    text-align: center; /* Centraliza o conteúdo */
+}
+
+#clima-section h2 {
+    color: #16a085; /* Um verde água, pode combinar com a seção de manutenção */
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+#clima-info {
+    background-color: #f8f9fa; /* Fundo sutil */
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px; /* Largura máxima para a caixa de info */
+    margin: 0 auto; /* Centraliza a caixa de info */
+    text-align: left; /* Alinha o texto interno à esquerda */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#clima-info p {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: #333;
+    line-height: 1.6;
+}
+
+#clima-info strong {
+    font-weight: 600;
+    color: #2c3e50;
+    min-width: 120px; /* Para alinhar os labels */
+    display: inline-block;
+}
+
+#clima-info img.clima-icon { /* Estilo para o ícone do clima */
+    vertical-align: middle; /* Alinha o ícone com o texto */
+    margin-left: 8px;
+    width: 50px; /* Ajuste conforme necessário */
+    height: 50px;
+}
+
+#clima-info .temperatura {
+    font-size: 1.8em; /* Temperatura maior */
+    font-weight: 600;
+    color: #3498db; /* Azul para a temperatura */
+}
+
+#clima-info .descricao-clima {
+    font-style: italic;
+    color: #555;
+    text-transform: capitalize; /* Primeira letra de cada palavra maiúscula */
+}

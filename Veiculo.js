@@ -1,5 +1,6 @@
+// js/Veiculo.js
 import { Manutencao } from './Manutencao.js';
-// import { exibirStatusMessage } from './utils.js'; // Se você criar utils.js
+// import { exibirStatusMessage } from './utils.js'; // Descomente se quiser usar o utils.js globalmente
 
 /**
  * Classe base para representar um veículo genérico na garagem.
@@ -55,24 +56,28 @@ export class Veiculo {
             // console.warn(`UI Updater não definido para ${this.modelo}`);
         }
     }
-    
+
     /**
      * Exibe uma mensagem de status na interface.
      * Implementação placeholder, idealmente viria de um módulo utils.
      * @param {string} mensagem - A mensagem a ser exibida.
-     * @param {'success'|'error'|'info'} tipo - O tipo de mensagem.
+     * @param {'success'|'error'|'info'|'warn'} tipo - O tipo de mensagem.
      * @protected
      */
     _exibirStatus(mensagem, tipo = 'info') {
         // console.log(`[${tipo.toUpperCase()}] ${this.modelo}: ${mensagem}`);
-        // No Garagem.js, haverá uma função global para isso
+        // No Garagem.js, haverá uma função global para isso, ou usar utils.js
         const statusMessagesEl = document.getElementById('status-messages');
         if (statusMessagesEl) {
             statusMessagesEl.textContent = mensagem;
-            statusMessagesEl.className = `status-${tipo}`; // Remove classes antigas
+            statusMessagesEl.className = ''; // Limpa classes antigas
+            statusMessagesEl.classList.add(`status-${tipo}`); // Adiciona a classe baseada no tipo
             statusMessagesEl.style.display = 'block';
             statusMessagesEl.style.opacity = '1';
-            setTimeout(() => {
+
+            if (statusMessagesEl.timeoutId) clearTimeout(statusMessagesEl.timeoutId);
+
+            statusMessagesEl.timeoutId = setTimeout(() => {
                 statusMessagesEl.style.opacity = '0';
                 setTimeout(() => statusMessagesEl.style.display = 'none', 500);
             }, 3000);
@@ -224,7 +229,10 @@ export class Veiculo {
                 veiculoData.cargaAtual = this.cargaAtual;
                 veiculoData.capacidadeMaximaCarga = this.capacidadeMaximaCarga;
             }
-            
+            if (this.constructor.name === "Bicicleta") {
+                veiculoData.status = this.status;
+            }
+
             localStorage.setItem(`veiculo_${this._tipoVeiculo}`, JSON.stringify(veiculoData));
         } catch (e) {
             console.error("Erro ao salvar veículo no LocalStorage:", e);
@@ -234,33 +242,18 @@ export class Veiculo {
 
     /**
      * Carrega o estado do veículo do LocalStorage.
-     * Este método é mais um template, a lógica de recriação de instâncias
-     * de Manutencao e a atribuição correta de propriedades deverão ser
-     * feitas na classe Garagem ou em um método estático aqui.
-     * @param {object} data - Os dados carregados do LocalStorage.
-     * @returns {void}
+     * @param {string} tipoVeiculo - O tipo do veículo (ex: 'carro')
+     * @returns {object|null} Os dados carregados ou null.
      * @static
      */
-    static carregarDoLocalStorage(tipoVeiculo, uiUpdater) {
+    static carregarDoLocalStorage(tipoVeiculo) {
         const dataJSON = localStorage.getItem(`veiculo_${tipoVeiculo}`);
         if (dataJSON) {
             try {
                 const data = JSON.parse(dataJSON);
-                // Recriar a instância correta do veículo
-                let veiculo;
-                // A instanciação real acontecerá na classe Garagem, que conhece os construtores
-                // Aqui, apenas retornamos os dados crus para a Garagem processar.
-                // Ou, a Garagem chama um método estático específico de cada subclasse.
-                
-                // Recriar instâncias de Manutencao
-                if (data.historicoManutencao && Array.isArray(data.historicoManutencao)) {
-                    data.historicoManutencao = data.historicoManutencao.map(m =>
-                        new Manutencao(m.descricao, m.data, m.hora, m.custo, m.tipo, m.id)
-                    );
-                } else {
-                    data.historicoManutencao = [];
-                }
-                return data; // Retorna os dados para a Garagem criar a instância correta
+                // A recriação das instâncias de Manutencao será feita pela Garagem
+                // ao receber esses dados.
+                return data;
             } catch (e) {
                 console.error(`Erro ao carregar ${tipoVeiculo} do LocalStorage:`, e);
                 localStorage.removeItem(`veiculo_${tipoVeiculo}`); // Remove dados corruptos
@@ -272,8 +265,6 @@ export class Veiculo {
 
     /**
      * Simula a interação com detalhes extras (API).
-     * Esta é uma função placeholder. A lógica real da API simulada ficaria aqui ou
-     * seria chamada por esta função.
      * @returns {Promise<object>} Uma promessa que resolve com os detalhes do veículo.
      */
     async obterDetalhesExtras() {
