@@ -3,269 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente - Documentada com IA</title>
-
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>Garagem Inteligente</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+
 <body>
-    <div id="container">
-        <h1>Garagem Inteligente</h1>
-        <p id="selecione">Selecione o veículo:</p>
+    <h1>Garagem Inteligente</h1>
 
-        <div id="veiculo-selection">
-            <button data-veiculo="carro">Carro Casual</button>
-            <button data-veiculo="esportivo">Carro Esportivo</button>
-            <button data-veiculo="caminhao">Caminhão</button>
-            <button data-veiculo="moto">Moto</button>
-            <button data-veiculo="bicicleta">Bicicleta</button>
-        </div>
+    <div id="notificacoes" class="notificacoes-container"></div>
 
-        <!-- ===== Carro Casual ===== -->
-        <div id="carro-container" class="veiculo-container" style="display: none;">
-            <h2>Carro Casual</h2>
-            <img src="img/sally.png" alt="Imagem do Carro Casual" width="200">
-            <div class="info-veiculo">
-                <p><strong>Modelo:</strong> <span id="carro-modelo">Sedan</span></p>
-                <p><strong>Cor:</strong> <span id="carro-cor">Prata</span></p>
-                <p><strong>Status:</strong> <span id="carro-status">Desligado</span></p>
-                <p><strong>Velocidade:</strong> <span id="carro-velocidade">0</span> km/h</p>
-            </div>
-            <div class="acoes-veiculo">
-                <button data-acao="ligar" data-tipo="carro">Ligar</button>
-                <button data-acao="desligar" data-tipo="carro">Desligar</button>
-                <button data-acao="acelerar" data-tipo="carro">Acelerar</button>
-                <button data-acao="frear" data-tipo="carro">Frear</button>
-                <button data-acao="buzinar" data-tipo="carro">Buzinar</button>
-            </div>
-            <div class="detalhes-api-section">
-                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="carro">Ver Detalhes Extras (API)</button>
-                <div id="carro-detalhes-api" class="detalhes-api-container" style="display: none;">
-                    <!-- O conteúdo será inserido aqui pelo JavaScript -->
-                </div>
-            </div>
-            <div class="manutencao-section">
-                <h3>Manutenção e Agendamento</h3>
-                <div class="form-manutencao">
-                    <input type="text" id="carro-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Carro Casual">
-                    <input type="text" id="carro-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Carro Casual">
-                    <input type="time" id="carro-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Carro Casual">
-                    <input type="number" id="carro-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Carro Casual">
-                    <select id="carro-servico-tipo" aria-label="Tipo de Serviço para Carro Casual">
-                        <option value="Preventiva">Preventiva</option>
-                        <option value="Corretiva">Corretiva</option>
-                        <option value="Agendada">Agendada</option>
-                    </select>
-                    <button data-acao="adicionarServico" data-tipo="carro">Adicionar/Agendar</button>
-                </div>
-                <h4>Histórico</h4>
-                <ul id="carro-historico-lista" aria-live="polite">
-                    <li>Nenhum serviço registrado.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- ===== Carro Esportivo ===== -->
-        <div id="esportivo-container" class="veiculo-container" style="display: none;">
-            <h2>Carro Esportivo</h2>
-            <img src="img/porsche.png" alt="Imagem do Carro Esportivo" width="200">
-             <div class="info-veiculo">
-                <p><strong>Modelo:</strong> <span id="esportivo-modelo">Porsche 911</span></p>
-                <p><strong>Cor:</strong> <span id="esportivo-cor">Vermelha</span></p>
-                <p><strong>Status:</strong> <span id="esportivo-status">Desligado</span></p>
-                <p><strong>Velocidade:</strong> <span id="esportivo-velocidade">0</span> km/h</p>
-                <p><strong>Turbo:</strong> <span id="esportivo-turbo">Desativado</span></p>
-            </div>
-            <div class="acoes-veiculo">
-                <button data-acao="ligar" data-tipo="esportivo">Ligar</button>
-                <button data-acao="desligar" data-tipo="esportivo">Desligar</button>
-                <button data-acao="acelerar" data-tipo="esportivo">Acelerar</button>
-                <button data-acao="frear" data-tipo="esportivo">Frear</button>
-                <button data-acao="buzinar" data-tipo="esportivo">Buzinar</button>
-                <button data-acao="ativarTurbo" data-tipo="esportivo">Ativar Turbo</button>
-                <button data-acao="desativarTurbo" data-tipo="esportivo">Desativar Turbo</button>
-            </div>
-             <div class="detalhes-api-section">
-                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="esportivo">Ver Detalhes Extras (API)</button>
-                <div id="esportivo-detalhes-api" class="detalhes-api-container" style="display: none;">
-                </div>
-            </div>
-             <div class="manutencao-section">
-                <h3>Manutenção e Agendamento</h3>
-                <div class="form-manutencao">
-                    <input type="text" id="esportivo-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Carro Esportivo">
-                    <input type="text" id="esportivo-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Carro Esportivo">
-                    <input type="time" id="esportivo-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Carro Esportivo">
-                    <input type="number" id="esportivo-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Carro Esportivo">
-                    <select id="esportivo-servico-tipo" aria-label="Tipo de Serviço para Carro Esportivo">
-                        <option value="Preventiva">Preventiva</option>
-                        <option value="Corretiva">Corretiva</option>
-                        <option value="Agendada">Agendada</option>
-                    </select>
-                    <button data-acao="adicionarServico" data-tipo="esportivo">Adicionar/Agendar</button>
-                </div>
-                <h4>Histórico</h4>
-                <ul id="esportivo-historico-lista" aria-live="polite">
-                    <li>Nenhum serviço registrado.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- ===== Caminhão ===== -->
-        <div id="caminhao-container" class="veiculo-container" style="display: none;">
-            <h2>Caminhão</h2>
-            <img src="img/rosabb.png" alt="Imagem do Caminhão" width="200">
-            <div class="info-veiculo">
-                <p><strong>Modelo:</strong> <span id="caminhao-modelo">Volvo FH</span></p>
-                <p><strong>Cor:</strong> <span id="caminhao-cor">Branco</span></p>
-                <p><strong>Status:</strong> <span id="caminhao-status">Desligado</span></p>
-                <p><strong>Velocidade:</strong> <span id="caminhao-velocidade">0</span> km/h</p>
-                <p><strong>Carga Atual:</strong> <span id="caminhao-carga">0</span> kg</p>
-                <p><strong>Capacidade Máxima:</strong> <span id="caminhao-capacidade">5000</span> kg</p>
-            </div>
-            <div class="acoes-veiculo">
-                <button data-acao="ligar" data-tipo="caminhao">Ligar</button>
-                <button data-acao="desligar" data-tipo="caminhao">Desligar</button>
-                <button data-acao="acelerar" data-tipo="caminhao">Acelerar</button>
-                <button data-acao="frear" data-tipo="caminhao">Frear</button>
-                <button data-acao="buzinar" data-tipo="caminhao">Buzinar</button>
-                <label for="caminhao-input-carga">Carga (kg):</label>
-                <input type="number" id="caminhao-input-carga">
-                <button data-acao="carregar" data-tipo="caminhao">Carregar</button>
-            </div>
-             <div class="detalhes-api-section">
-                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="caminhao">Ver Detalhes Extras (API)</button>
-                <div id="caminhao-detalhes-api" class="detalhes-api-container" style="display: none;">
-                </div>
-            </div>
-             <div class="manutencao-section">
-                <h3>Manutenção e Agendamento</h3>
-                <div class="form-manutencao">
-                    <input type="text" id="caminhao-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Caminhão">
-                    <input type="text" id="caminhao-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Caminhão">
-                    <input type="time" id="caminhao-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Caminhão">
-                    <input type="number" id="caminhao-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Caminhão">
-                    <select id="caminhao-servico-tipo" aria-label="Tipo de Serviço para Caminhão">
-                        <option value="Preventiva">Preventiva</option>
-                        <option value="Corretiva">Corretiva</option>
-                        <option value="Agendada">Agendada</option>
-                    </select>
-                    <button data-acao="adicionarServico" data-tipo="caminhao">Adicionar/Agendar</button>
-                </div>
-                <h4>Histórico</h4>
-                <ul id="caminhao-historico-lista" aria-live="polite">
-                   <li>Nenhum serviço registrado.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- ===== Moto ===== -->
-        <div id="moto-container" class="veiculo-container" style="display: none;">
-            <h2>Moto</h2>
-            <img src="img/Imagem-Capa-Motos-removebg-preview.png" alt="Imagem da Moto" width="200">
-            <div class="info-veiculo">
-                <p><strong>Modelo:</strong> <span id="moto-modelo">Harley Fat Boy</span></p>
-                <p><strong>Cor:</strong> <span id="moto-cor">Preto</span></p>
-                <p><strong>Status:</strong> <span id="moto-status">Desligado</span></p>
-                <p><strong>Velocidade:</strong> <span id="moto-velocidade">0</span> km/h</p>
-            </div>
-            <div class="acoes-veiculo">
-                <button data-acao="ligar" data-tipo="moto">Ligar</button>
-                <button data-acao="desligar" data-tipo="moto">Desligar</button>
-                <button data-acao="acelerar" data-tipo="moto">Acelerar</button>
-                <button data-acao="frear" data-tipo="moto">Frear</button>
-                <button data-acao="buzinar" data-tipo="moto">Buzinar</button>
-            </div>
-             <div class="detalhes-api-section">
-                <button class="btn-detalhes-extras" data-acao="verDetalhes" data-tipo="moto">Ver Detalhes Extras (API)</button>
-                <div id="moto-detalhes-api" class="detalhes-api-container" style="display: none;">
-                </div>
-            </div>
-             <div class="manutencao-section">
-                <h3>Manutenção e Agendamento</h3>
-                 <div class="form-manutencao">
-                    <input type="text" id="moto-servico-desc" placeholder="Descrição do Serviço" aria-label="Descrição do Serviço para Moto">
-                    <input type="text" id="moto-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Moto">
-                    <input type="time" id="moto-servico-hora" title="Hora do Agendamento (opcional)" aria-label="Hora do Serviço para Moto">
-                    <input type="number" id="moto-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Moto">
-                    <select id="moto-servico-tipo" aria-label="Tipo de Serviço para Moto">
-                        <option value="Preventiva">Preventiva</option>
-                        <option value="Corretiva">Corretiva</option>
-                        <option value="Agendada">Agendada</option>
-                    </select>
-                    <button data-acao="adicionarServico" data-tipo="moto">Adicionar/Agendar</button>
-                </div>
-                <h4>Histórico</h4>
-                <ul id="moto-historico-lista" aria-live="polite">
-                   <li>Nenhum serviço registrado.</li>
-                </ul>
-            </div>
-        </div>
-
-         <!-- ===== Bicicleta ===== -->
-         <div id="bicicleta-container" class="veiculo-container" style="display: none;">
-            <h2>Bicicleta</h2>
-            <img src="img/madoneskr7-removebg-preview.png" alt="Imagem da Bicicleta" width="200">
-             <div class="info-veiculo">
-                <p><strong>Modelo:</strong> <span id="bicicleta-modelo">Caloi Explorer</span></p>
-                <p><strong>Cor:</strong> <span id="bicicleta-cor">Azul</span></p>
-                <p><strong>Status:</strong> <span id="bicicleta-status">Parada</span></p>
-                <p><strong>Velocidade:</strong> <span id="bicicleta-velocidade">0</span> km/h</p>
-            </div>
-            <div class="acoes-veiculo">
-                <button data-acao="pedalar" data-tipo="bicicleta">Pedalar</button>
-                <button data-acao="frear" data-tipo="bicicleta">Frear</button>
-                <button data-acao="buzinar" data-tipo="bicicleta">Buzinar</button> <!-- Campainha -->
-            </div>
-             <div class="manutencao-section">
-                <h3>Manutenção e Registro</h3>
-                <div class="form-manutencao">
-                    <input type="text" id="bicicleta-servico-desc" placeholder="Descrição do Serviço/Ajuste" aria-label="Descrição do Serviço para Bicicleta">
-                    <input type="text" id="bicicleta-servico-data" placeholder="Data (DD/MM/AAAA)" aria-label="Data do Serviço para Bicicleta">
-                    <input type="time" id="bicicleta-servico-hora" title="Hora (opcional)" aria-label="Hora do Serviço para Bicicleta">
-                    <input type="number" id="bicicleta-servico-custo" placeholder="Custo R$" step="0.01" min="0" aria-label="Custo do Serviço para Bicicleta">
-                    <input type="hidden" id="bicicleta-servico-tipo" value="Ajuste">
-                    <button data-acao="adicionarServico" data-tipo="bicicleta">Registrar Serviço</button>
-                </div>
-                <h4>Histórico</h4>
-                <ul id="bicicleta-historico-lista" aria-live="polite">
-                    <li>Nenhum serviço registrado.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="agendamentos-futuros-section">
-            <h2>Próximos Agendamentos</h2>
-            <ul id="agendamentos-futuros-lista" aria-live="polite">
-                <li>Nenhum agendamento futuro.</li>
-            </ul>
-        </div>
-
-        <!-- ===== NOVA SEÇÃO DE CLIMA ===== -->
-        <div id="clima-section">
-            <h2>Condições Climáticas Atuais</h2>
-            <div id="clima-info" aria-live="polite">
-                <p>Carregando informações do clima...</p>
-            </div>
-        </div>
-        <!-- =============================== -->
-
-        <div id="status-messages" aria-live="polite"></div>
-
+    <div class="add-veiculo-controls">
+        <button id="mostrar-form-add">Adicionar Novo Veículo +</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
-    <!-- Scripts Modulares -->
-    <script type="module" src="js/utils.js"></script>
-    <script type="module" src="js/Manutencao.js"></script>
-    <script type="module" src="js/Veiculo.js"></script>
-    <script type="module" src="js/Carro.js"></script>
-    <script type="module" src="js/CarroEsportivo.js"></script>
-    <script type="module" src="js/Caminhao.js"></script>
-    <script type="module" src="js/Moto.js"></script>
-    <script type="module" src="js/Bicicleta.js"></script>
-    <script type="module" src="js/Garagem.js"></script>
+    <div id="add-veiculo-form-container" class="add-veiculo-container" style="display: none;">
+        <h2>Adicionar Novo Veículo</h2>
+        <form id="form-add-veiculo">
+            <label for="add-tipo">Tipo:</label>
+            <select id="add-tipo" required>
+                <option value="" disabled selected>-- Selecione o Tipo --</option>
+                <option value="Carro">Carro Comum</option>
+                <option value="CarroEsportivo">Carro Esportivo</option>
+                <option value="Caminhao">Caminhão</option>
+                <option value="Moto">Moto</option>
+                <option value="Bicicleta">Bicicleta</option>
+            </select>
 
+            <label for="add-modelo">Modelo:</label>
+            <input type="text" id="add-modelo" placeholder="Ex: Onix, XRE 300" required>
+
+            <label for="add-cor">Cor:</label>
+            <input type="text" id="add-cor" placeholder="Ex: Prata, Vermelha" required>
+
+            <div id="campo-capacidade-carga" class="campo-opcional">
+                <label for="add-capacidade-carga">Capacidade Carga (kg):</label>
+                <input type="number" id="add-capacidade-carga" placeholder="5000" min="0">
+            </div>
+
+            <div class="form-add-buttons">
+                <button type="submit">Adicionar à Garagem</button>
+                <button type="button" id="cancelar-add-veiculo">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="garagem-container" class="container">
+        <p id="garagem-vazia-msg" style="display: none;">Sua garagem está vazia. Adicione um veículo!</p>
+    </div>
+
+    <div id="detalhes-e-agendamento" class="detalhes-container" style="display: none;">
+        <h2>Detalhes e Manutenção do Veículo Selecionado</h2>
+        <button id="fechar-detalhes" class="close-btn">×</button>
+        <div id="informacoesVeiculo">
+            <div id="detalhesExtrasContainer">
+                <!-- Os detalhes extras serão inseridos aqui -->
+            </div>
+        </div>
+        <div id="agendamento-form-container" style="display: none;">
+            <h3>Agendar Nova Manutenção</h3>
+            <form id="form-agendamento">
+                <label for="agenda-data">Data:</label>
+                <input type="date" id="agenda-data" required>
+                <label for="agenda-tipo">Tipo de Serviço:</label>
+                <input type="text" id="agenda-tipo" placeholder="Ex: Troca de óleo" required>
+                <label for="agenda-custo">Custo (R$):</label>
+                <input type="number" id="agenda-custo" step="0.01" min="0" placeholder="150.00" required>
+                <label for="agenda-descricao">Descrição (Opcional):</label>
+                <textarea id="agenda-descricao" rows="2"></textarea>
+                <button type="submit">Agendar/Registrar</button>
+            </form>
+        </div>
+        <div id="agendamentos-futuros-container" style="display: none;">
+            <h4>Próximos Agendamentos</h4>
+            <pre id="agendamentos-futuros-conteudo"></pre>
+        </div>
+    </div>
+
+     <div id="planejar-viagem-container" class="planejar-viagem-container">
+        <h2>Planejar Viagem</h2>
+        <label for="destino-viagem">Digite a cidade de destino:</label>
+        <input type="text" id="destino-viagem" placeholder="Digite a cidade de destino">
+        <button id="verificar-clima-btn">Verificar Clima</button>
+        <div id="previsao-tempo-resultado"></div>
+    </div>
+
+    <audio id="som-buzina" src="sounds/buzina.mp3" preload="auto"></audio>
+    <audio id="som-acelerar" src="sounds/carroacelerando.mp3" preload="auto"></audio>
+    <audio id="som-frear" src="sounds/freio.mp3" preload="auto"></audio>
+    <audio id="som-ligar" src="sounds/carrodesligando.mp3" preload="auto"></audio>
+    <audio id="som-desligar" src="sounds/carrodesligando.mp3" preload="auto"></audio>
+    <audio id="som-adicionar" src="sounds/success-add.mp3" preload="auto"></audio>
+
+    <script src="js/classes/Manutencao.js"></script>
+    <script src="js/classes/Veiculo.js"></script>
+    <script src="js/classes/Carro.js"></script>
+    <script src="js/classes/Carroesportivo.js"></script>
+    <script src="js/classes/Caminhao.js"></script>
+    <script src="js/classes/Moto.js"></script>
+    <script src="js/classes/Bicicleta.js"></script>
+    <script src="js/script.js"></script>
+    <footer>
+        <p>© 2025 Ana Paula Marcussi - IFPR.</p>
+        <p>Projeto Garagem Inteligente - Informática para Internet</p>
+    </footer>
 </body>
 </html>
