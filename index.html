@@ -3,109 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente</title>
+    <title>Garagem Conectada - APIs e Viagens</title>
     <link rel="stylesheet" href="css/style.css">
+
 </head>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-
 <body>
-    <h1>Garagem Inteligente</h1>
 
-    <div id="notificacoes" class="notificacoes-container"></div>
+    <div class="container">
+        <h1>Garagem Conectada: APIs e Viagens</h1>
 
-    <div class="add-veiculo-controls">
-        <button id="mostrar-form-add">Adicionar Novo Veículo +</button>
-    </div>
+        <div id="notificacoes-container"></div>
 
-    <div id="add-veiculo-form-container" class="add-veiculo-container" style="display: none;">
-        <h2>Adicionar Novo Veículo</h2>
-        <form id="form-add-veiculo">
-            <label for="add-tipo">Tipo:</label>
-            <select id="add-tipo" required>
-                <option value="" disabled selected>-- Selecione o Tipo --</option>
-                <option value="Carro">Carro Comum</option>
-                <option value="CarroEsportivo">Carro Esportivo</option>
-                <option value="Caminhao">Caminhão</option>
-                <option value="Moto">Moto</option>
-                <option value="Bicicleta">Bicicleta</option>
-            </select>
 
-            <label for="add-modelo">Modelo:</label>
-            <input type="text" id="add-modelo" placeholder="Ex: Onix, XRE 300" required>
+        <div class="section" id="add-vehicle-section">
+            <h2>Adicionar Veículo</h2>
+            <form id="form-add-veiculo">
+                <label for="veiculo-tipo">Tipo:</label>
+                <select id="veiculo-tipo" required>
+                    <option value="Carro">Carro</option>
+                    <option value="CarroEsportivo">Carro Esportivo</option>
+                    <option value="Caminhao">Caminhão</option>
+                </select>
 
-            <label for="add-cor">Cor:</label>
-            <input type="text" id="add-cor" placeholder="Ex: Prata, Vermelha" required>
+                <label for="veiculo-placa">Placa:</label>
+                <input type="text" id="veiculo-placa" required placeholder="AAA-1234">
 
-            <div id="campo-capacidade-carga" class="campo-opcional">
-                <label for="add-capacidade-carga">Capacidade Carga (kg):</label>
-                <input type="number" id="add-capacidade-carga" placeholder="5000" min="0">
-            </div>
+                <label for="veiculo-modelo">Modelo:</label>
+                <input type="text" id="veiculo-modelo" required>
 
-            <div class="form-add-buttons">
+                <label for="veiculo-cor">Cor:</label>
+                <input type="text" id="veiculo-cor" required>
+
+
+                <div id="campos-carro" class="campos-especificos">
+                    <label for="carro-portas">Número de Portas:</label>
+                    <input type="number" id="carro-portas" value="4" min="2">
+                </div>
+                <div id="campos-carroesportivo" class="campos-especificos" style="display: none;">
+                     <label for="carroesportivo-portas">Número de Portas:</label>
+                     <input type="number" id="carroesportivo-portas" value="2" min="2">
+                 </div>
+                 <div id="campos-caminhao" class="campos-especificos" style="display: none;">
+                    <label for="caminhao-eixos">Número de Eixos:</label>
+                    <input type="number" id="caminhao-eixos" value="2" min="2">
+                    <label for="caminhao-capacidade">Capacidade de Carga (kg):</label>
+                    <input type="number" id="caminhao-capacidade" value="5000" min="0">
+                 </div>
+
                 <button type="submit">Adicionar à Garagem</button>
-                <button type="button" id="cancelar-add-veiculo">Cancelar</button>
-            </div>
-        </form>
-    </div>
-
-    <div id="garagem-container" class="container">
-        <p id="garagem-vazia-msg" style="display: none;">Sua garagem está vazia. Adicione um veículo!</p>
-    </div>
-
-    <div id="detalhes-e-agendamento" class="detalhes-container" style="display: none;">
-        <h2>Detalhes e Manutenção do Veículo Selecionado</h2>
-        <button id="fechar-detalhes" class="close-btn">×</button>
-        <div id="informacoesVeiculo">
-            <div id="detalhesExtrasContainer">
-                <!-- Os detalhes extras serão inseridos aqui -->
-            </div>
-        </div>
-        <div id="agendamento-form-container" style="display: none;">
-            <h3>Agendar Nova Manutenção</h3>
-            <form id="form-agendamento">
-                <label for="agenda-data">Data:</label>
-                <input type="date" id="agenda-data" required>
-                <label for="agenda-tipo">Tipo de Serviço:</label>
-                <input type="text" id="agenda-tipo" placeholder="Ex: Troca de óleo" required>
-                <label for="agenda-custo">Custo (R$):</label>
-                <input type="number" id="agenda-custo" step="0.01" min="0" placeholder="150.00" required>
-                <label for="agenda-descricao">Descrição (Opcional):</label>
-                <textarea id="agenda-descricao" rows="2"></textarea>
-                <button type="submit">Agendar/Registrar</button>
             </form>
         </div>
-        <div id="agendamentos-futuros-container" style="display: none;">
-            <h4>Próximos Agendamentos</h4>
-            <pre id="agendamentos-futuros-conteudo"></pre>
+
+
+
+        <div class="section" id="garage-section">
+            <h2>Minha Garagem</h2>
+            <ul id="lista-garagem">
+                 <p>Nenhum veículo na garagem.</p>
+            </ul>
+        </div>
+
+
+        <div class="section" id="detalhes-veiculo-section" style="display: none;">
+            <h2 id="detalhes-veiculo-titulo">Detalhes, Manutenção e Interação</h2>
+            <button id="btn-voltar-garagem">Voltar para Garagem</button>
+
+            <div class="interaction-section">
+                <h3>Status Atual & Interação</h3>
+                <div id="detalhes-veiculo-status">
+                    Carregando status...
+                </div>
+                <div id="detalhes-veiculo-botoes">
+                    <button id="btn-detail-ligar">Ligar</button>
+                    <button id="btn-detail-desligar">Desligar</button>
+                    <button id="btn-detail-acelerar">Acelerar</button>
+                    <button id="btn-detail-buzinar">Buzinar</button>
+                    <button id="btn-detail-turbo" class="btn-especifico" style="display:none;">Ativar/Desativar Turbo</button>
+                    <button id="btn-detail-carregar" class="btn-especifico" style="display:none;">Carregar (1000kg)</button>
+                    <button id="btn-detail-descarregar" class="btn-especifico" style="display:none;">Descarregar (500kg)</button>
+                </div>
+                 <!-- A imagem do veículo (que seria adicionada na outra funcionalidade) não está aqui neste HTML base -->
+            </div>
+
+
+            <div class="api-details-section">
+                <h3>Detalhes Extras (API Simulada)</h3>
+                <button id="btn-ver-detalhes-extras" style="margin-bottom: 10px;">Ver Detalhes Extras</button>
+                <div id="detalhes-extras-api">
+                    <p>Clique no botão acima para carregar detalhes.</p>
+                </div>
+            </div>
+
+
+
+            <div class="maintenance-details">
+                <h3>Histórico de Manutenção</h3>
+                <ul id="lista-historico">
+                     <li>Nenhum histórico registrado.</li>
+                </ul>
+
+                <h3>Agendamentos Futuros</h3>
+                <ul id="lista-agendamentos">
+                     <li>Nenhum agendamento futuro.</li>
+                </ul>
+
+                <h3>Agendar Nova Manutenção</h3>
+                <form id="form-agendamento">
+                    <input type="hidden" id="agendamento-veiculo-placa">
+                    <label for="agenda-data">Data:</label>
+                    <input type="date" id="agenda-data" required>
+                    <label for="agenda-tipo">Tipo de Serviço:</label>
+                    <input type="text" id="agenda-tipo" required placeholder="Ex: Troca de óleo">
+                    <label for="agenda-custo">Custo (R$):</label>
+                    <input type="number" id="agenda-custo" step="0.01" min="0" required placeholder="150.00">
+                    <label for="agenda-descricao">Descrição (Opcional):</label>
+                    <textarea id="agenda-descricao" rows="3"></textarea>
+                    <button type="submit">Agendar Serviço</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="section" id="travel-planner-section">
+            <h2>Planejar Viagem (Previsão do Tempo)</h2>
+            <div class="travel-form">
+                <label for="destino-viagem">Cidade de Destino:</label>
+                <input type="text" id="destino-viagem" placeholder="Ex: Rio de Janeiro">
+                <button id="verificar-clima-btn">Verificar Clima</button>
+            </div>
+
+            <!-- INÍCIO: Botões de Filtro de Previsão -->
+            <div id="previsao-filtros" style="margin-top: 15px; margin-bottom: 10px; display: none;">
+                <button class="btn-filtro-clima" data-periodo="hoje">Hoje</button>
+                <button class="btn-filtro-clima" data-periodo="amanha">Amanhã</button>
+                <button class="btn-filtro-clima" data-periodo="3dias">Próximos 3 dias</button>
+            </div>
+    
+
+            <div id="previsao-tempo-resultado" class="api-result">
+                <p>Digite uma cidade e clique em verificar.</p>
+            </div>
+             <p class="api-key-warning">
+        
+            </p>
+        </div>
+
+    </div>
+
+    <section class="secao-dicas" id="secao-dicas-manutencao">
+    <h2>Dicas de Manutenção do Backend</h2>
+    <div class="dicas-controles">
+        <button id="btn-buscar-dicas-gerais" class="btn-acao">Buscar Dicas Gerais</button>
+        <div class="form-grupo-dicas">
+            <input type="text" id="input-tipo-veiculo-dica" placeholder="Digite tipo (ex: carro, caminhao)">
+            <button id="btn-buscar-dicas-especificas" class="btn-acao">Buscar Dica Específica</button>
         </div>
     </div>
-
-     <div id="planejar-viagem-container" class="planejar-viagem-container">
-        <h2>Planejar Viagem</h2>
-        <label for="destino-viagem">Digite a cidade de destino:</label>
-        <input type="text" id="destino-viagem" placeholder="Digite a cidade de destino">
-        <button id="verificar-clima-btn">Verificar Clima</button>
-        <div id="previsao-tempo-resultado"></div>
+    <div id="resultado-dicas" class="resultado-api">
+        <!-- As dicas carregadas do backend aparecerão aqui -->
     </div>
+</section>
 
-    <audio id="som-buzina" src="sounds/buzina.mp3" preload="auto"></audio>
-    <audio id="som-acelerar" src="sounds/carroacelerando.mp3" preload="auto"></audio>
-    <audio id="som-frear" src="sounds/freio.mp3" preload="auto"></audio>
-    <audio id="som-ligar" src="sounds/carrodesligando.mp3" preload="auto"></audio>
-    <audio id="som-desligar" src="sounds/carrodesligando.mp3" preload="auto"></audio>
-    <audio id="som-adicionar" src="sounds/success-add.mp3" preload="auto"></audio>
+    <script src="js/manuntencao.js"></script>
+    <script src="js/veiculo.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
 
-    <script src="js/classes/Manutencao.js"></script>
-    <script src="js/classes/Veiculo.js"></script>
-    <script src="js/classes/Carro.js"></script>
-    <script src="js/classes/Carroesportivo.js"></script>
-    <script src="js/classes/Caminhao.js"></script>
-    <script src="js/classes/Moto.js"></script>
-    <script src="js/classes/Bicicleta.js"></script>
-    <script src="js/script.js"></script>
-    <footer>
-        <p>© 2025 Ana Paula Marcussi - IFPR.</p>
-        <p>Projeto Garagem Inteligente - Informática para Internet</p>
-    </footer>
 </body>
 </html>

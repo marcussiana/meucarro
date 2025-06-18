@@ -1,30 +1,35 @@
+
 [
-  {
-    "id": "carro_1747220074828",
-    "valorFIPE": 45000.00,
-    "recallPendente": false,
-    "dica": "Mantenha a manutenção em dia para evitar problemas futuros.",
-    "seguradoraRecomendada": "Porto Seguro"
-  },
-  {
-    "id": "moto_1747220567987",
-    "valorFIPE": 12000.00,
-    "recallPendente": true,
-    "dica": "Verifique os pneus regularmente para garantir a segurança.",
-    "seguradoraRecomendada": "SulAmérica"
-  },
-  {
-    "id": "caminhao_1747220987654",
-    "valorFIPE": 150000.00,
-    "recallPendente": false,
-    "dica": "Respeite os limites de carga para evitar acidentes.",
-    "seguradoraRecomendada": "Liberty Seguros"
-  },
-  {
-    "id": "carroesportivo_1747221345234",
-    "valorFIPE": 90000.00,
-    "recallPendente": false,
-    "dica": "Não abuse da velocidade, este carro não te dará super poderes.",
-    "seguradoraRecomendada": "HDI Seguros"
-  }
-]
+    {
+      "placa": "AAA-1111",
+      "identificador": "AAA-1111", 
+      "valorFipe": "R$ 48.500,00",
+      "recallPendente": "Nenhum recall ativo.",
+      "dicaManutencao": "Verificar nível do óleo a cada 5.000km.",
+      "ultimaLocalizacao": "Garagem Principal"
+    },
+    {
+      "placa": "BBB-2222",
+      "identificador": "BBB-2222",
+      "valorFipe": "R$ 115.800,00",
+      "recallPendente": "Atualização software multimídia (Recomendado)",
+      "dicaManutencao": "Calibrar pneus esportivos mensalmente.",
+      "ultimaLocalizacao": "Oficina Parceira (revisão)"
+    },
+    {
+      "placa": "CCC-3333",
+      "identificador": "CCC-3333",
+      "valorFipe": "R$ 180.000,00",
+      "recallPendente": "Verificar sistema de freios (Obrigatório)",
+      "dicaManutencao": "Lubrificar eixos a cada 20.000km ou 6 meses.",
+      "ultimaLocalizacao": "Centro de Distribuição"
+    },
+    {
+      "placa": "XYZ-9876",
+      "identificador": "XYZ-9876",
+      "valorFipe": "R$ 62.300,00",
+      "recallPendente": "Nenhum recall ativo.",
+      "dicaManutencao": "Trocar filtro de ar condicionado anualmente.",
+      "ultimaLocalizacao": "Garagem Principal"
+    }
+  ]
