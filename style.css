@@ -1,209 +1,256 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-:root {
-    --bg-color: #f7f8fa;
-    --sidebar-bg: #ffffff;
-    --card-bg: #ffffff;
-    --primary-color: #4f46e5;
-    --primary-hover: #4338ca;
-    --secondary-color: #6b7280;
-    --danger-color: #dc2626;
-    --danger-hover: #b91c1c;
-    --text-primary: #111827;
-    --text-secondary: #6b7280;
-    --border-color: #e5e7eb;
-    --success-color: #16a34a;
-}
-
-* { box-sizing: border-box; }
-
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-#app-container {
-    display: flex;
-    height: 100vh;
-}
-
-/* --- Sidebar --- */
-.sidebar {
-    width: 280px;
-    background-color: var(--sidebar-bg);
-    border-right: 1px solid var(--border-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
-}
-.sidebar-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-}
-.sidebar-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-.vehicle-nav {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1rem;
-}
-.vehicle-nav a {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    text-decoration: none;
-    color: var(--text-primary);
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-}
-.vehicle-nav a:hover {
-    background-color: #f3f4f6;
-}
-.vehicle-nav a.selecionado {
-    background-color: var(--primary-color);
-    color: white;
-}
-.sidebar-footer {
-    padding: 1.5rem;
-    border-top: 1px solid var(--border-color);
-}
-.btn-add {
-    width: 100%;
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: 600;
-}
-.btn-add:hover { background-color: var(--primary-hover); }
-
-/* --- Main Content --- */
-.main-content {
-    flex-grow: 1;
-    padding: 2rem;
-    overflow-y: auto;
-}
-.welcome-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100%;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #e0f2f7;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    color: #007bff;
+    margin-bottom: 30px;
     text-align: center;
-    color: var(--text-secondary);
+    font-size: 2.2em;
 }
-.welcome-panel h1 { font-size: 2.5rem; color: var(--text-primary); }
-.vehicle-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-.vehicle-header h1 { margin: 0; }
-.status {
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 99px;
-    font-size: 0.9rem;
-}
-.status.ligado { background-color: #dcfce7; color: var(--success-color); }
-.status.desligado { background-color: #fee2e2; color: var(--danger-color); }
 
-/* --- Cards and Grid --- */
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 1.5rem;
+h2 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
 }
-.card {
-    background-color: var(--card-bg);
+
+h3 {
+    color: #007bff;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.garagem-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+.selecao-veiculo button {
+    background-color: #28a745;
+    margin: 8px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 7px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.selecao-veiculo button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.selecao-veiculo button.selecionado {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px #007bff;
+}
+
+.informacoes-veiculo {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
-    padding: 1.5rem;
-}
-.card.history-card { grid-column: span 2; } /* Faz o histórico ocupar mais espaço se possível */
-.card h3 { margin-top: 0; }
-
-/* --- Formulários e Listas --- */
-.form-group { margin-bottom: 1rem; }
-.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-input, select, textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 1rem;
-}
-.maintenance-list {
-    list-style: none;
-    padding: 0;
-    max-height: 200px;
-    overflow-y: auto;
-}
-.maintenance-list li {
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--border-color);
-}
-.maintenance-list li:last-child { border-bottom: none; }
-.maintenance-list li:empty::after {
-    content: "Nenhum registro encontrado.";
-    color: var(--text-secondary);
+    padding: 20px;
+    margin-top: 25px;
+    text-align: left;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    line-height: 1.6;
+    position: relative; /* Para posicionar a imagem */
 }
 
-/* --- Botões --- */
-button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
+.informacoes-veiculo p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 1.05em;
+}
+
+.informacoes-veiculo span {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.informacoes-veiculo img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    align-self: center;
+    transition: filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+.informacoes-veiculo img.ligado {
+    filter: brightness(1.15) saturate(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+}
+
+.controles-garagem {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.acao-btn {
+    padding: 12px 20px;
+    margin: 7px;
     border: none;
+    border-radius: 6px;
+    background-color: #6c757d;
+    color: white;
+    font-size: 1.05em;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: background-color 0.2s;
-}
-.btn-action { background-color: var(--secondary-color); color: white; }
-.btn-action:hover { background-color: #4b5563; }
-.btn-danger { background-color: var(--danger-color); color: white; }
-.btn-danger:hover { background-color: var(--danger-hover); }
-.btn-submit { background-color: var(--primary-color); color: white; }
-.btn-submit:hover { background-color: var(--primary-hover); }
-.btn-secondary { background-color: #e5e7eb; color: var(--text-primary); }
-.btn-secondary:hover { background-color: #d1d5db; }
-button:disabled {
-    background-color: #d1d5db;
-    cursor: not-allowed;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* --- Modal --- */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+.acao-btn:hover:not(:disabled) {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.acao-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#btnAtivarTurboGaragem { background-color: #ffc107; color: #333; }
+#btnAtivarTurboGaragem:hover:not(:disabled) { background-color: #e0a800; }
+#btnDesativarTurboGaragem { background-color: #dc3545; }
+#btnDesativarTurboGaragem:hover:not(:disabled) { background-color: #c82333; }
+#btnCarregarGaragem { background-color: #17a2b8; }
+#btnCarregarGaragem:hover:not(:disabled) { background-color: #138496; }
+
+.carga-controle {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-}
-.modal-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-}
-.modal-content h2 { margin-top: 0; }
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 15px;
 }
 
-/* --- Utilitários --- */
-.hidden { display: none !important; }
+.carga-controle input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 120px;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* --- Feedback Visual de Velocidade --- */
+.velocimetro-container {
+    width: 80%;
+    max-width: 400px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    height: 25px;
+    margin: 20px auto;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.velocimetro-barra {
+    height: 100%;
+    width: 0%; /* Controlado via JS */
+    background-color: #28a745; /* Verde para velocidade */
+    transition: width 0.3s ease-out; /* Transição suave da barra */
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+}
+
+#velocimetroTexto {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 25px; /* Centraliza verticalmente */
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-shadow: 0 0 2px rgba(255,255,255,0.7);
+    z-index: 1; /* Garante que o texto fique acima da barra */
+}
+
+/* --- Custom Alert --- */
+.custom-alert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8d7da; /* Fundo vermelho claro */
+    color: #721c24; /* Texto vermelho escuro */
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 25px 35px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 350px;
+    text-align: center;
+}
+
+#alertMessage {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+#closeAlert {
+    background-color: #dc3545; /* Vermelho do botão */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#closeAlert:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .garagem-container {
+        padding: 20px;
+    }
+    .selecao-veiculo button, .acao-btn {
+        padding: 10px 15px;
+        font-size: 1em;
+        margin: 5px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    h3 {
+        font-size: 1.1em;
+    }
+}
