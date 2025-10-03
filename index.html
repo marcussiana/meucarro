@@ -1,66 +1,157 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente com Feedback</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Garagem Conectada - APIs e Viagens</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>B1.A4 - Feedback e Alertas na Garagem Inteligente</h1>
+    <div class="container">
+        <h1>Garagem Conectada: APIs e Viagens</h1>
 
-    <div class="garagem-container">
-        <h2>Minha Garagem Inteligente</h2>
-        <div class="selecao-veiculo">
-            <h3>Selecionar Veículo:</h3>
-            <button id="btnSelecionarCarroPadrao">Carro Padrão</button>
-            <button id="btnSelecionarCarroEsportivo">Carro Esportivo</button>
-            <button id="btnSelecionarCaminhao">Caminhão</button>
+        <div id="notificacoes-container"></div>
+
+        <div class="section" id="add-vehicle-section">
+            <h2>Adicionar Veículo</h2>
+            <form id="form-add-veiculo">
+                <label for="veiculo-tipo">Tipo:</label>
+                <select id="veiculo-tipo" required>
+                    <option value="Carro">Carro</option>
+                    <option value="CarroEsportivo">Carro Esportivo</option>
+                    <option value="Caminhao">Caminhão</option>
+                </select>
+
+                <label for="veiculo-placa">Placa:</label>
+                <input type="text" id="veiculo-placa" required placeholder="AAA-1234">
+
+                <label for="veiculo-modelo">Modelo:</label>
+                <input type="text" id="veiculo-modelo" required>
+
+                <label for="veiculo-cor">Cor:</label>
+                <input type="text" id="veiculo-cor" required>
+
+                <div id="campos-carro" class="campos-especificos">
+                    <label for="carro-portas">Número de Portas:</label>
+                    <input type="number" id="carro-portas" value="4" min="2">
+                </div>
+                <div id="campos-carroesportivo" class="campos-especificos" style="display: none;">
+                     <label for="carroesportivo-portas">Número de Portas:</label>
+                     <input type="number" id="carroesportivo-portas" value="2" min="2">
+                 </div>
+                 <div id="campos-caminhao" class="campos-especificos" style="display: none;">
+                    <label for="caminhao-eixos">Número de Eixos:</label>
+                    <input type="number" id="caminhao-eixos" value="2" min="2">
+                    <label for="caminhao-capacidade">Capacidade de Carga (kg):</label>
+                    <input type="number" id="caminhao-capacidade" value="5000" min="0">
+                 </div>
+
+                <button type="submit">Adicionar à Garagem</button>
+            </form>
         </div>
 
-        <div id="informacoesVeiculo" class="informacoes-veiculo">
-            <!-- Informações do veículo selecionado serão exibidas aqui -->
+        <div class="section" id="garage-section">
+            <h2>Minha Garagem</h2>
+            <ul id="lista-garagem">
+                 <p>Nenhum veículo na garagem.</p>
+            </ul>
         </div>
 
-        <!-- Feedback visual de velocidade -->
-        <div class="velocimetro-container">
-            <div class="velocimetro-barra" id="velocimetroBarra"></div>
-            <span id="velocimetroTexto">0 km/h</span>
-        </div>
+        <div class="section" id="detalhes-veiculo-section" style="display: none;">
+            <h2 id="detalhes-veiculo-titulo">Detalhes, Manutenção e Interação</h2>
+            <button id="btn-voltar-garagem">Voltar para Garagem</button>
 
-        <div class="controles-garagem">
-            <h3>Ações da Garagem:</h3>
-            <button id="btnLigarGaragem" class="acao-btn">Ligar</button>
-            <button id="btnDesligarGaragem" class="acao-btn">Desligar</button>
-            <button id="btnAcelerarGaragem" class="acao-btn">Acelerar</button>
-            <button id="btnFrearGaragem" class="acao-btn">Frear</button>
-            <button id="btnBuzinarGaragem" class="acao-btn">Buzinar</button>
+            <div class="interaction-section">
+                <h3>Status Atual & Interação</h3>
+                <div id="detalhes-veiculo-status">
+                    Carregando status...
+                </div>
+                <div id="detalhes-veiculo-botoes">
+                    <button id="btn-detail-ligar">Ligar</button>
+                    <button id="btn-detail-desligar">Desligar</button>
+                    <button id="btn-detail-acelerar">Acelerar</button>
+                    <button id="btn-detail-buzinar">Buzinar</button>
+                    <button id="btn-detail-turbo" class="btn-especifico" style="display:none;">Ativar/Desativar Turbo</button>
+                    <button id="btn-detail-carregar" class="btn-especifico" style="display:none;">Carregar (1000kg)</button>
+                    <button id="btn-detail-descarregar" class="btn-especifico" style="display:none;">Descarregar (500kg)</button>
+                    <button id="btn-detail-editar" class="btn-editar">Editar Veículo</button>
+                    <button id="btn-detail-excluir" class="btn-excluir">Excluir Veículo</button>
+                </div>
+            </div>
 
-            <button id="btnAtivarTurboGaragem" class="acao-btn especifico-esportivo" disabled>Ativar Turbo</button>
-            <button id="btnDesativarTurboGaragem" class="acao-btn especifico-esportivo" disabled>Desativar Turbo</button>
+        <!--    <div class="api-details-section">
+                <h3>Detalhes Extras (API Simulada)</h3>
+                <button id="btn-ver-detalhes-extras" style="margin-bottom: 10px;">Ver Detalhes Extras</button>
+                <div id="detalhes-extras-api">
+                    <p>Clique no botão acima para carregar detalhes.</p>
+                </div>
+            </div>-->
 
-            <div class="carga-controle especifico-caminhao" style="display: none;">
-                <input type="number" id="inputCargaGaragem" placeholder="Add Carga (kg)" min="0">
-                <button id="btnCarregarGaragem" class="acao-btn">Carregar</button>
+            <div class="maintenance-details">
+                <h3>Histórico de Manutenção</h3>
+                <ul id="lista-historico">
+                     <li>Nenhum histórico registrado.</li>
+                </ul>
+
+                <h3>Agendamentos Futuros</h3>
+                <ul id="lista-agendamentos">
+                     <li>Nenhum agendamento futuro.</li>
+                </ul>
+
+                <h3>Agendar Nova Manutenção</h3>
+                <form id="form-agendamento">
+                    <input type="hidden" id="agendamento-veiculo-placa">
+                    <label for="agenda-data">Data:</label>
+                    <input type="date" id="agenda-data" required>
+                    <label for="agenda-tipo">Tipo de Serviço:</label>
+                    <input type="text" id="agenda-tipo" required placeholder="Ex: Troca de óleo">
+                    <label for="agenda-custo">Custo (R$):</label>
+                    <input type="number" id="agenda-custo" step="0.01" min="0" required placeholder="150.00">
+                    <label for="agenda-descricao">Descrição (Opcional):</label>
+                    <textarea id="agenda-descricao" rows="3"></textarea>
+                    <button type="submit">Agendar Serviço</button>
+                </form>
             </div>
         </div>
+
+        <div class="section" id="travel-planner-section">
+            <h2>Planejar Viagem (Previsão do Tempo)</h2>
+            <div class="travel-form">
+                <label for="destino-viagem">Cidade de Destino:</label>
+                <input type="text" id="destino-viagem" placeholder="Ex: Rio de Janeiro">
+                <button id="verificar-clima-btn">Verificar Clima</button>
+            </div>
+            <div id="previsao-filtros" style="margin-top: 15px; margin-bottom: 10px; display: none;">
+                <button class="btn-filtro-clima" data-periodo="hoje">Hoje</button>
+                <button class="btn-filtro-clima" data-periodo="amanha">Amanhã</button>
+                <button class="btn-filtro-clima" data-periodo="3dias">Próximos 3 dias</button>
+            </div>
+            <div id="previsao-tempo-resultado" class="api-result">
+                <p>Digite uma cidade e clique em verificar.</p>
+            </div>
+             <p class="api-key-warning"></p>
+        </div>
+        
+        <section class="section secao-dicas" id="secao-dicas-manutencao">
+            <h2>Dicas de Manutenção:</h2>
+            
+                    <input type="text" id="input-tipo-veiculo-dica" placeholder="Digite tipo (ex: carro, caminhao)">
+                    <div class="dicas-controles">
+                <button id="btn-buscar-dicas-gerais" class="btn-acao">Buscar Dicas Gerais</button>
+                
+                    
+                </div>
+            </div>
+            <div id="resultado-dicas" class="resultado-api">
+            </div>
+        </section>
+
     </div>
 
-    <!-- Elemento para exibir alertas customizados (melhor que alert()) -->
-    <div id="customAlert" class="custom-alert" style="display: none;">
-        <span id="alertMessage"></span>
-        <button id="closeAlert">OK</button>
-    </div>
-
-    <!-- Áudios -->
-    <audio id="audioBuzinaCarro" src="sons/buzina_carro.mp3" preload="auto"></audio>
-    <audio id="audioBuzinaEsportivo" src="sons/buzina_esportivo.mp3" preload="auto"></audio>
-    <audio id="audioBuzinaCaminhao" src="sons/buzina_caminhao.mp3" preload="auto"></audio>
-    <audio id="audioLigar" src="sons/ligar_motor.mp3" preload="auto"></audio>
-    <audio id="audioDesligar" src="sons/desligar_motor.mp3" preload="auto"></audio>
-    <audio id="audioAcelerar" src="sons/acelerar_motor.mp3" preload="auto"></audio>
-    <audio id="audioFrear" src="sons/frear.mp3" preload="auto"></audio>
-
-    <script src="script.js"></script>
+    <script src="js/manuntencao.js"></script>
+    <script src="js/veiculo.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -21,6 +21,6 @@
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "mongodb": "^6.17.0",
-    "mongoose": "^8.18.1"
+    "mongoose": "^8.19.0"
   }
 }
