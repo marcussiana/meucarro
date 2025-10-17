@@ -2,10 +2,10 @@
   "name": "garagem-conectada-backend",
   "version": "1.0.0",
   "description": "Backend server for Garagem Conectada",
-  "main": "server.js",
+  "main": "backend/server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "node backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
