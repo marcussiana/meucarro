@@ -4,51 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garagem Conectada - APIs e Viagens</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Garagem Conectada: APIs e Viagens</h1>
 
         <div id="notificacoes-container"></div>
-
-        <!-- Painel de autenticação: login / registro -->
-        <div class="section" id="auth-section">
-            <h2>Conta</h2>
-            <div id="auth-status">
-                <div id="user-panel" style="display:none;">
-                    <img id="user-avatar" src="" alt="Avatar" style="width:50px; height:50px; border-radius:50%; margin-right:10px;">
-                    <span id="auth-logged-user"></span>
-                </div>
-                <button id="btn-logout" style="display:none;">Sair</button>
-            </div>
-
-            <div id="auth-forms">
-                <div id="login-box">
-                    <h3>Entrar</h3>
-                    <form id="login-form">
-                        <label for="login-identifier">Usuário ou e-mail</label>
-                        <input id="login-identifier" type="text" required />
-                        <label for="login-password">Senha</label>
-                        <input id="login-password" type="password" required />
-                        <button type="submit">Entrar</button>
-                    </form>
-                </div>
-
-                <div id="register-box" style="margin-top:10px;">
-                    <h3>Criar Conta</h3>
-                    <form id="register-form">
-                        <label for="register-username">Usuário</label>
-                        <input id="register-username" type="text" required />
-                        <label for="register-email">E-mail</label>
-                        <input id="register-email" type="email" required />
-                        <label for="register-password">Senha</label>
-                        <input id="register-password" type="password" required />
-                        <button type="submit">Registrar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
 
         <div class="section" id="add-vehicle-section">
             <h2>Adicionar Veículo</h2>
@@ -68,6 +30,9 @@
 
                 <label for="veiculo-cor">Cor:</label>
                 <input type="text" id="veiculo-cor" required>
+
+                <label for="veiculo-imagem">URL da Foto (ex: https://...jpg):</label>
+                <input type="text" id="veiculo-imagem" placeholder="Cole a URL da foto do carro">
 
                 <div id="campos-carro" class="campos-especificos">
                     <label for="carro-portas">Número de Portas:</label>
@@ -90,9 +55,9 @@
 
         <div class="section" id="garage-section">
             <h2>Minha Garagem</h2>
-            <ul id="lista-garagem">
+            <div id="lista-garagem" class="garage-grid">
                  <p>Nenhum veículo na garagem.</p>
-            </ul>
+            </div>
         </div>
 
         <div class="section" id="detalhes-veiculo-section" style="display: none;">
@@ -100,6 +65,9 @@
             <button id="btn-voltar-garagem">Voltar para Garagem</button>
 
             <div class="interaction-section">
+                <div id="detalhes-veiculo-imagem" style="text-align: center; margin-bottom: 20px;">
+                    <img id="detail-img" src="" alt="Foto do veículo" style="max-width: 400px; max-height: 300px; border-radius: 8px; display: none;">
+                </div>
                 <h3>Status Atual & Interação</h3>
                 <div id="detalhes-veiculo-status">
                     Carregando status...
@@ -116,14 +84,6 @@
                     <button id="btn-detail-excluir" class="btn-excluir">Excluir Veículo</button>
                 </div>
             </div>
-
-        <!--    <div class="api-details-section">
-                <h3>Detalhes Extras (API Simulada)</h3>
-                <button id="btn-ver-detalhes-extras" style="margin-bottom: 10px;">Ver Detalhes Extras</button>
-                <div id="detalhes-extras-api">
-                    <p>Clique no botão acima para carregar detalhes.</p>
-                </div>
-            </div>-->
 
             <div class="maintenance-details">
                 <h3>Histórico de Manutenção</h3>
@@ -169,24 +129,10 @@
             </div>
              <p class="api-key-warning"></p>
         </div>
-        
-        <section class="section secao-dicas" id="secao-dicas-manutencao">
-            <h2>Dicas de Manutenção:</h2>
-            
-                    <input type="text" id="input-tipo-veiculo-dica" placeholder="Digite tipo (ex: carro, caminhao)">
-                    <div class="dicas-controles">
-                <button id="btn-buscar-dicas-gerais" class="btn-acao">Buscar Dicas Gerais</button>
-                
-                    
-                </div>
-            </div>
-            <div id="resultado-dicas" class="resultado-api">
-            </div>
-        </section>
 
     </div>
 
-    <script src="js/manuntencao.js"></script>
+    <script src="js/manutencao.js"></script>
     <script src="js/veiculo.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/ui.js"></script>

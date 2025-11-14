@@ -1,0 +1,6 @@
+- [x] Implementar filtros para previsão do tempo: "Hoje", "Amanhã", "Próximos 3 dias"
+- [x] Adicionar função renderWeather para filtrar e exibir previsões
+- [x] Armazenar dados da previsão globalmente
+- [x] Adicionar event listeners aos botões de filtro
+- [x] Mostrar botões de filtro após buscar previsão
+- [x] Testar funcionalidade (servidor rodando em http://localhost:3000)
