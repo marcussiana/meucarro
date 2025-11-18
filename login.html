@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login - Garagem Conectada</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="logo">🚗</div>
+        <div class="brand-text"><h1>Garagem Conectada</h1><p>Entre para gerenciar sua frota</p></div>
+      </div>
+      <form id="form-login" class="login-form" novalidate>
+        <div class="input-row">
+          <label for="login-username">Usuário</label>
+          <input id="login-username" type="text" autocomplete="username" required placeholder="admin">
+        </div>
+        <div class="input-row">
+          <label for="login-password">Senha</label>
+          <div class="password-wrap">
+            <input id="login-password" type="password" autocomplete="current-password" required placeholder="senha">
+            <button type="button" id="toggle-pass" class="toggle-pass" aria-label="Mostrar senha">👁️</button>
+          </div>
+        </div>
+        <div class="actions-row">
+          <button type="submit" id="btn-login">Entrar</button>
+        </div>
+        <div class="helper-row">
+          <label><input type="checkbox" id="remember-me"> Lembrar-me neste dispositivo</label>
+        </div>
+        <p id="login-error" class="login-error" role="status" aria-live="polite"></p>
+      </form>
+      <div class="divider" style="margin:18px 0; text-align:center; color:#9b7fb5">ou</div>
+      <div id="register-block">
+        <form id="form-register" class="login-form" novalidate>
+          <div class="input-row">
+            <label for="register-email">Email</label>
+            <input id="register-email" type="email" autocomplete="email" required placeholder="seu@exemplo.com">
+          </div>
+          <div class="input-row">
+            <label for="register-name">Nome</label>
+            <input id="register-name" type="text" required placeholder="Seu nome">
+          </div>
+          <div class="input-row">
+            <label for="register-password">Senha</label>
+            <input id="register-password" type="password" required placeholder="Senha segura">
+          </div>
+          <div class="actions-row">
+            <button type="submit" id="btn-register">Criar Conta</button>
+          </div>
+          <p id="register-error" class="login-error" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="login-footer">Não compartilhe sua conta. Proteja suas credenciais.</div>
+    </div>
+  </div>
+  <script src="js/login.js"></script>
+</body>
+</html>

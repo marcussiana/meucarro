@@ -8,6 +8,28 @@ body {
     line-height: 1.7;
 }
 
+/* Login page styles */
+.login-page { display:flex; align-items:center; justify-content:center; min-height:80vh; background: linear-gradient(180deg, #f7ebfc 0%, #f9f6ff 100%); }
+.login-card { width: 420px; background: #fff; border-radius: 14px; padding: 28px; box-shadow: 0 12px 30px rgba(79,35,93,0.08); font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.login-brand { display:flex; gap:14px; align-items:center; margin-bottom:18px; }
+.login-brand .logo { font-size:40px; width:64px; height:64px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#8e44ad,#6c3483); color:white }
+.login-brand .brand-text h1 { margin:0; font-size:1.25rem; color:#3b1b58; }
+.login-brand .brand-text p { margin:2px 0 0 0; font-size:0.9rem; color:#6a4c93 }
+.login-form .input-row { margin-bottom:12px }
+.login-form label { display:block; font-weight:600; color:#5a1d7c; margin-bottom:6px }
+.login-form input[type="text"], .login-form input[type="password"] { width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e9dff3; background:#fbf6ff; box-sizing:border-box; font-size:1rem }
+.password-wrap { display:flex; gap:8px; align-items:center }
+.password-wrap input { flex:1 }
+.toggle-pass { background:transparent; border:none; cursor:pointer; font-size:18px }
+.actions-row { display:flex; gap:10px; margin-top:6px }
+.actions-row button { flex:1; padding:12px 14px; border-radius:10px; font-weight:600 }
+.actions-row .btn-secondary { background:#f3e9f8; color:#5a1d7c; border:1px solid #ebdef6 }
+.actions-row #btn-login { background: linear-gradient(90deg,#8e44ad,#6c3483); color:white; border:none }
+.helper-row { margin-top:10px; color:#6a4c93; font-size:0.92rem }
+.login-error { color:#7b4aa6; margin-top:12px; display:none }
+.login-footer { margin-top:16px; font-size:0.85rem; color:#9b7fb5; text-align:center }
+
+
 .container {
     max-width: 950px;
     margin: 0 auto;
@@ -115,6 +137,17 @@ label {
 .vehicle-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 15px rgba(128, 0, 128, 0.2);
+}
+
+.shared-vehicle {
+    border: 2px dashed #f39ac9;
+}
+
+.shared-tag {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #9b59b6;
 }
 
 .vehicle-img {
@@ -282,8 +315,8 @@ ul li:last-child {
 }
 
 .erro {
-    color: #e74c3c;
-    font-weight: bold;
+    color: #7b4aa6; /* tom púrpura suave em vez de vermelho */
+    font-weight: 600;
     text-align: center;
 }
 
@@ -322,17 +355,17 @@ ul li:last-child {
 
 .api-key-warning {
     margin-top: 30px;
-    padding: 22px;
-    background-color: #fff0f5; /* Rosa claro com toque feminino */
-    border: 1px solid #ffb6c1; /* Borda rosa mais escura */
-    color: #c71585; /* Roxo avermelhado para o texto */
+    padding: 18px;
+    background-color: #fbf2ff; /* fundo muito suave púrpura */
+    border: 1px solid #e6d6f4; /* borda roxa clara */
+    color: #6a4c93; /* texto em tom roxo do tema */
     border-radius: 10px;
-    font-size: 1.05rem;
+    font-size: 1.0rem;
     text-align: center;
 }
 
 .api-key-warning strong {
-    color: #dc143c; /* Vermelho mais forte para o destaque de erro */
+    color: #8e44ad; /* destaque em roxo vibrante */
 }
 
 /* Lista da Garagem */

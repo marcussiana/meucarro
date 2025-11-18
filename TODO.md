@@ -1,6 +1,2 @@
-- [x] Implementar filtros para previsão do tempo: "Hoje", "Amanhã", "Próximos 3 dias"
-- [x] Adicionar função renderWeather para filtrar e exibir previsões
-- [x] Armazenar dados da previsão globalmente
-- [x] Adicionar event listeners aos botões de filtro
-- [x] Mostrar botões de filtro após buscar previsão
-- [x] Testar funcionalidade (servidor rodando em http://localhost:3000)
+- [x] Modify veiculos.js /previsao route to return first 5 list items from OpenWeather API instead of grouping by day
+- [ ] Test the server to ensure the weather forecast now shows 5 individual predictions

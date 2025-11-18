@@ -8,7 +8,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Garagem Conectada: APIs e Viagens</h1>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Garagem Conectada: APIs e Viagens</h1>
+            <div id="user-bar" style="text-align:right">
+                <span id="user-name" style="display:none"></span>
+                <button id="btn-logout" style="display:none; margin-left:12px; background:#c71585">Sair</button>
+            </div>
+        </div>
 
         <div id="notificacoes-container"></div>
 
@@ -34,6 +40,8 @@
                 <label for="veiculo-imagem">URL da Foto (ex: https://...jpg):</label>
                 <input type="text" id="veiculo-imagem" placeholder="Cole a URL da foto do carro">
 
+                <input type="hidden" id="editing-id" value="">
+
                 <div id="campos-carro" class="campos-especificos">
                     <label for="carro-portas">Número de Portas:</label>
                     <input type="number" id="carro-portas" value="4" min="2">
@@ -49,7 +57,10 @@
                     <input type="number" id="caminhao-capacidade" value="5000" min="0">
                  </div>
 
-                <button type="submit">Adicionar à Garagem</button>
+                <div style="display:flex; gap:10px;">
+                    <button type="submit" id="btn-submit-add">Adicionar à Garagem</button>
+                    <button type="button" id="btn-cancel-edit" style="display:none;">Cancelar Edição</button>
+                </div>
             </form>
         </div>
 
@@ -108,6 +119,12 @@
                     <label for="agenda-descricao">Descrição (Opcional):</label>
                     <textarea id="agenda-descricao" rows="3"></textarea>
                     <button type="submit">Agendar Serviço</button>
+                </form>
+                <h3>Compartilhar este veículo</h3>
+                <form id="form-compartilhar">
+                    <label for="compartilhar-email">Email do usuário:</label>
+                    <input type="email" id="compartilhar-email" placeholder="amigo@exemplo.com">
+                    <button type="submit">Compartilhar</button>
                 </form>
             </div>
         </div>

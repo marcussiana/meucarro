@@ -1,34 +1,66 @@
-// Classes de veículos simples para o frontend
-class Veiculo {
-  constructor({ tipo = 'Carro', placa = '', modelo = '', cor = '' } = {}) {
-    this.tipo = tipo;
-    this.placa = placa;
-    this.modelo = modelo;
-    this.cor = cor;
-    this.status = { ligado: false, velocidade: 0 };
+// Frontend helper: Veiculo class
+// This file provides a small Veiculo class used by the frontend scripts.
+// It deliberately does NOT conflict with the server Mongoose model at models/Veiculo.js
+
+/* eslint-disable no-unused-vars */
+(function(global) {
+  class Veiculo {
+    constructor(data = {}) {
+      this._id = data._id || data.id || null;
+      this.placa = data.placa || '';
+      this.modelo = data.modelo || '';
+      this.cor = data.cor || '';
+      this.imagem = data.imagem || '';
+      this.tipo = data.tipo || 'Carro';
+      this.portas = data.portas || null;
+      this.eixos = data.eixos || null;
+      this.capacidade = data.capacidade || null;
+      this.status = data.status || { ligado: false, velocidade: 0 };
+      this.carga = data.carga || 0;
+      this.turbo = !!data.turbo;
+      this.owner = data.owner || null; // may be populated with { email }
+      this.sharedWith = Array.isArray(data.sharedWith) ? data.sharedWith.slice() : [];
+    }
+
+    toJSON() {
+      return {
+        _id: this._id,
+        placa: this.placa,
+        modelo: this.modelo,
+        cor: this.cor,
+        imagem: this.imagem,
+        tipo: this.tipo,
+        portas: this.portas,
+        eixos: this.eixos,
+        capacidade: this.capacidade,
+        status: this.status,
+        carga: this.carga,
+        turbo: this.turbo,
+        owner: this.owner,
+        sharedWith: this.sharedWith
+      };
+    }
+
+    static fromForm() {
+      const tipo = document.getElementById('veiculo-tipo').value;
+      const placa = document.getElementById('veiculo-placa').value.trim();
+      const modelo = document.getElementById('veiculo-modelo').value.trim();
+      const cor = document.getElementById('veiculo-cor').value.trim();
+      const imagem = document.getElementById('veiculo-imagem').value.trim();
+      const data = { tipo, placa, modelo, cor, imagem };
+      if (tipo === 'Carro') data.portas = Number(document.getElementById('carro-portas').value) || 4;
+      if (tipo === 'CarroEsportivo') data.portas = Number(document.getElementById('carroesportivo-portas').value) || 2;
+      if (tipo === 'Caminhao') {
+        data.eixos = Number(document.getElementById('caminhao-eixos').value) || 2;
+        data.capacidade = Number(document.getElementById('caminhao-capacidade').value) || 0;
+      }
+      return new Veiculo(data);
+    }
+
+    // Useful for debugging
+    toString() { return `${this.modelo} (${this.placa})`; }
   }
-  ligar() { this.status.ligado = true; }
-  desligar() { this.status.ligado = false; this.status.velocidade = 0; }
-  acelerar(delta = 10) { if (this.status.ligado) this.status.velocidade += delta; }
-  buzinar() { return `${this.placa}: BEEP BEEP!`; }
-}
 
-class Carro extends Veiculo {
-  constructor(opts) { super({ ...opts, tipo: 'Carro' }); this.portas = opts.portas || 4; }
-}
-
-class CarroEsportivo extends Carro {
-  constructor(opts) { super({ ...opts, tipo: 'CarroEsportivo' }); this.turbo = opts.turbo || false; }
-  toggleTurbo() { this.turbo = !this.turbo; }
-}
-
-class Caminhao extends Veiculo {
-  constructor(opts) { super({ ...opts, tipo: 'Caminhao' }); this.eixos = opts.eixos || 2; this.capacidade = opts.capacidade || 0; this.carga = 0; }
-  carregar(peso) { this.carga = Math.min(this.capacidade, this.carga + peso); }
-  descarregar(peso) { this.carga = Math.max(0, this.carga - peso); }
-}
-
-window.Veiculo = Veiculo;
-window.Carro = Carro;
-window.CarroEsportivo = CarroEsportivo;
-window.Caminhao = Caminhao;
+  // Expose to global for non-module frontend scripts
+  global.Veiculo = Veiculo;
+})(window);

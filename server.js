@@ -14,7 +14,13 @@ app.use('/', express.static(path.join(__dirname)));
 
 // Roteador de veículos / API
 const veiculosRouter = require('./veiculos');
+const authRouter = require('./auth');
+app.use('/api/auth', authRouter);
 app.use('/api/veiculos', veiculosRouter);
+
+// Conectar ao MongoDB (tenta conectar, mas servidor inicializa mesmo em modo degradado)
+const { connectDB } = require('./db');
+connectDB().then(ok => { if (!ok) console.warn('Rodando sem persistência MongoDB (modo degradado).'); });
 
 // Rota para previsão do tempo (proxy simples para OpenWeather via route no veiculos)
 app.use('/api/previsao', (req, res, next) => {
